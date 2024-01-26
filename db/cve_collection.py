@@ -8,6 +8,7 @@ class CveCollection(object):
     def __init__(self, database):
         self.COLLECTION = database.DATABASE[self.COLLECTION_NAME]
 
+    @staticmethod
     def insert(self, data):
         self.COLLECTION.insert_one(data)
 

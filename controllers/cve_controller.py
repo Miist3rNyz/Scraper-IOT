@@ -1,9 +1,9 @@
 from db.cve_collection import CveCollection
-from db.database import Database
+from db.scraper_database import ScraperDatabase
 
 
 class CveController:
 
     @staticmethod
-    def save(self, cves: list) -> None:
-        CveCollection(Database()).insert(cves)
+    def save_cves(self, cves: list) -> None:
+        CveCollection(ScraperDatabase()).insert(cves)

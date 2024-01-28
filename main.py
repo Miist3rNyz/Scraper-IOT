@@ -9,5 +9,11 @@ if __name__ == "__main__":
     level = logging.INFO
     datefmt = "%Y-%m-%d %H:%M:%S"
 
-    logging.basicConfig(format=format, filename=file, level=level, datefmt=datefmt)
+    logger = logging.getLogger(__name__)
+    handler = logging.FileHandler(file)
+    handler.setLevel(level)
+    formatter = logging.Formatter(format, datefmt=datefmt)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    
 

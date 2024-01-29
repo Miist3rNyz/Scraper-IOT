@@ -2,8 +2,10 @@ import logging
 import time
 from typing import TypeVar
 
+from db.cpe_collection import CpeCollection
 from db.cve_collection import CveCollection
 from db.nvd_collection import NvdCollection
+from importers.cpe_importer import CpeImporter
 from importers.cve_importer import CveImporter
 from importers.nvd_importer import NvdImporter
 
@@ -16,6 +18,9 @@ class ImportController(object):
 
     TIME_BETWEEN_REQUESTS = 6
     RESULT_PER_PAGE = 2000
+
+    def import_cpes(self) -> None:
+        self.__import_many_and_save(CpeImporter(), CpeCollection())
 
     def import_cves(self) -> None:
         self.__import_many_and_save(CveImporter(), CveCollection())

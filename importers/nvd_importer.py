@@ -8,10 +8,12 @@ LOGGER = logging.getLogger(__name__)
 
 class NvdImporter(ABC):
 
+    def __init__(self, api_url: str):
+        self.api_url = api_url
+
     @property
-    @abstractmethod
     def api_url(self) -> str:
-        raise NotImplementedError("This method should be implemented in a child class")
+        return self.api_url
 
     def _get_data(self, start_index=0) -> dict:
         url: str = self.__build_url(start_index)

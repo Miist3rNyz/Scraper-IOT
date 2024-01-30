@@ -9,7 +9,7 @@ from importers.cpe_importer import CpeImporter
 from importers.cve_importer import CveImporter
 from importers.nvd_importer import NvdImporter
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = logging.getLogger("scraper-iot")
 T = TypeVar('T', bound=NvdImporter)
 U = TypeVar('U', bound=NvdCollection)
 

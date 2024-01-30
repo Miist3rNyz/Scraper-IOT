@@ -1,24 +1,28 @@
 import logging
 import requests
-from abc import ABC, abstractmethod
+import os
+from abc import ABC
 from urllib import parse
+from dotenv import load_dotenv
 
-LOGGER = logging.getLogger(__name__)
+load_dotenv()
+
+LOGGER = logging.getLogger("scraper-iot")
+API_KEY = os.getenv("NVD_API_KEY")
 
 
 class NvdImporter(ABC):
 
+    api_url: str
+
     def __init__(self, api_url: str):
         self.api_url = api_url
 
-    @property
-    def api_url(self) -> str:
-        return self.api_url
-
     def _get_data(self, start_index=0) -> dict:
         url: str = self.__build_url(start_index)
+        headers = {"apiKey": API_KEY}
         try:
-            response = requests.get(url).json()
+            response = requests.get(url, headers=headers).json()
         except requests.exceptions.RequestException as e:
             LOGGER.error(f"Error while requesting {url}: {e}")
             return {}

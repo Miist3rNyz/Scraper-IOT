@@ -18,23 +18,28 @@ class NvdImporter(ABC):
     def __init__(self, api_url: str):
         self.api_url = api_url
 
-    def _get_data(self, start_index=0) -> dict:
-        url: str = self.__build_url(start_index)
+    def _get_data(self, url: str) -> dict:
         headers = {"apiKey": API_KEY}
         try:
-            response = requests.get(url, headers=headers).json()
+            response = requests.get(url, headers=headers)
         except requests.exceptions.RequestException as e:
             LOGGER.error(f"Error while requesting {url}: {e}")
             return {}
+        
+        if response.headers['apiKey'] == "No":
+            LOGGER.error(f"Error while requesting {url}: Request without API Key")
 
         LOGGER.debug(f"Successfully requested {url}")
-        return response
+        return response.json()
 
-    def __build_url(self, start_index: int) -> str:
-        return self.api_url + parse.urlencode({
-            'startIndex': start_index,
-        })
+    def __build_url(self, start_index: int, other_options: dict = None) -> str:
+        start_index = {'startIndex': start_index}
+        options = {**start_index, **other_options}
+        return self.api_url + parse.urlencode(options)
 
-    def run_import(self, start_index: int = 0) -> dict:
-        data = self._get_data(start_index)
+    def run_import(self, start_index: int = 0, other_options: dict = None) -> dict:
+        if other_options is None:
+            other_options = {}
+        url = self.__build_url(start_index, other_options)
+        data = self._get_data(url)
         return data

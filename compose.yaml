@@ -1,6 +1,6 @@
 services:
   mongodb:
-    image: arm64/mongo:latest
+    image: mongo:latest
     container_name: mongodb
     ports:
       - "27017:27017"

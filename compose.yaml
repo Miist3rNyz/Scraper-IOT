@@ -6,8 +6,5 @@ services:
       - "27017:27017"
     volumes:
       - shared_database:/data/db
-    environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: example
 volumes:
   shared_database:

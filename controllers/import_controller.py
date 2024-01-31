@@ -1,5 +1,6 @@
 import logging
 import time
+from datetime import datetime
 from typing import TypeVar
 
 from db.cpe_collection import CpeCollection
@@ -16,8 +17,12 @@ U = TypeVar('U', bound=NvdCollection)
 
 class ImportController(object):
 
-    TIME_BETWEEN_REQUESTS = 6
-    RESULT_PER_PAGE = 2000
+    def update_cves(self) -> None:
+        api_options = {
+            "lastModStartDate": datetime.now().isoformat(),
+            "lastModEndDate": datetime.now().isoformat()
+        }
+        self.__import_many_and_save(CveImporter(api_options), CveCollection())
 
     def import_cpes(self) -> None:
         self.__import_many_and_save(CpeImporter(), CpeCollection())
@@ -28,19 +33,37 @@ class ImportController(object):
     def __import_many_and_save(self, importer: T, collection: U) -> None:
         LOGGER.info("🚀 Starting import")
 
-        start_index = 0
         remaining_results = 1
 
-        while start_index < remaining_results:
-            LOGGER.info(f"⏳ State of import: {start_index * 100} / {remaining_results}")
+        while importer.start_index < remaining_results:
+            LOGGER.info(f"⏳ State of import: {importer.start_index * 100} / {remaining_results}")
 
-            data = importer.run_import(start_index)
+            data = importer.run_import()
             collection.insert(data)
 
-            start_index += ImportController.RESULT_PER_PAGE
-            remaining_results = data['totalResults'] - start_index + 1  # 1 because start_index is 0-based
+            importer.start_index += importer.RESULT_PER_PAGE
+            remaining_results = data['totalResults'] - importer.start_index + 1  # 1 because start_index is 0-based
 
-            LOGGER.debug(f"Waiting {self.TIME_BETWEEN_REQUESTS} seconds before next request")
-            time.sleep(self.TIME_BETWEEN_REQUESTS)  # NVD API rate limit is 10 requests per minute
+            LOGGER.debug(f"Waiting {importer.TIME_BETWEEN_REQUESTS} seconds before next request")
+            time.sleep(importer.TIME_BETWEEN_REQUESTS)  # NVD API rate limit is 10 requests per minute
+
+        LOGGER.info("🏁 Finished import")
+
+    def __import_many_and_replace(self, importer: T, collection: U) -> None:
+        LOGGER.info("🚀 Starting import")
+
+        remaining_results = 1
+
+        while importer.start_index < remaining_results:
+            LOGGER.info(f"⏳ State of import: {importer.start_index * 100} / {remaining_results}")
+
+            data = importer.run_import()
+            collection.insert(data)
+
+            importer.start_index += importer.RESULT_PER_PAGE
+            remaining_results = data['totalResults'] - importer.start_index + 1  # 1 because start_index is 0-based
+
+            LOGGER.debug(f"Waiting {importer.TIME_BETWEEN_REQUESTS} seconds before next request")
+            time.sleep(importer.TIME_BETWEEN_REQUESTS)  # NVD API rate limit is 10 requests per minute
 
         LOGGER.info("🏁 Finished import")

@@ -58,7 +58,7 @@ class ImportController(object):
             LOGGER.info(f"⏳ State of import: {importer.start_index * 100} / {remaining_results}")
 
             data = importer.run_import()
-            collection.insert(data)
+            collection.replace(data)
 
             importer.start_index += importer.RESULT_PER_PAGE
             remaining_results = data['totalResults'] - importer.start_index + 1  # 1 because start_index is 0-based

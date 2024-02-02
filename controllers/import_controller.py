@@ -18,25 +18,44 @@ U = TypeVar('U', bound=NvdCollection)
 class ImportController(object):
 
     def update_cves(self) -> None:
+        # The new last_mod_date is taken before update in case of long-running time to update
+        date_now = datetime.now()
         api_options = {
-            "lastModStartDate": datetime.now().isoformat(),
+            "lastModStartDate": CveImporter.load_last_update(),
             "lastModEndDate": datetime.now().isoformat()
         }
-        self.__import_many_and_save(CveImporter(api_options), CveCollection())
+        self.__import_many_and_replace(CveImporter(api_options), CveCollection())
+        CveImporter.write_last_update(date_now)
+
+    def update_cpes(self) -> None:
+        # The new last_mod_date is taken before update in case of long-running time to update
+        date_now = datetime.now()
+        api_options = {
+            "lastModStartDate": CpeImporter.load_last_update(),
+            "lastModEndDate": datetime.now().isoformat()
+        }
+        self.__import_many_and_replace(CpeImporter(), CpeCollection()) # TODO: Add api_options
+        CpeImporter.write_last_update(date_now)
 
     def import_cpes(self) -> None:
+        # The new last_mod_date is taken before update in case of long-running time to update
+        date_now = datetime.now()
         self.__import_many_and_save(CpeImporter(), CpeCollection())
+        CpeImporter.write_last_update(date_now)
 
-    def import_cves(self) -> None:
-        self.__import_many_and_save(CveImporter(), CveCollection())
+    def import_cves(self, start_index=0) -> None:
+        # The new last_mod_date is taken before update in case of long-running time to update
+        date_now = datetime.now()
+        self.__import_many_and_save(CveImporter(start_index=start_index), CveCollection())
+        CveImporter.write_last_update(date_now)
 
     def __import_many_and_save(self, importer: T, collection: U) -> None:
         LOGGER.info("🚀 Starting import")
 
-        remaining_results = 1
+        total_results: int = importer.start_index + 1
 
-        while importer.start_index < remaining_results:
-            state: float = (importer.start_index * 100) / remaining_results
+        while importer.start_index < total_results:
+            state: float = (importer.start_index * 100) / total_results
             LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
             data = importer.run_import()
@@ -44,6 +63,8 @@ class ImportController(object):
 
             importer.start_index += importer.RESULT_PER_PAGE
             remaining_results = data['totalResults'] - importer.start_index + 1  # 1 because start_index is 0-based
+            total_results = int(data['totalResults'])
+            LOGGER.debug(f"totalResults: {total_results}, remaining_results: {remaining_results}")
 
             LOGGER.debug(f"Waiting {importer.TIME_BETWEEN_REQUESTS} seconds before next request")
             time.sleep(importer.TIME_BETWEEN_REQUESTS)  # NVD API rate limit is 10 requests per minute

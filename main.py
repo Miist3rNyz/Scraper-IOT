@@ -16,6 +16,7 @@ if __name__ == "__main__":
     import_cmd = import_parser.add_parser("import", help="Import data from NVD")
     import_cmd.add_argument("--cves", action="store_true", help="Import CVEs")
     import_cmd.add_argument("--cpes", action="store_true", help="Import CPEs")
+    import_cmd.add_argument("--start-index", action="store", type=int, default=0, help="Import all data")
 
     update_cmd = import_parser.add_parser("update", help="Update data from NVD")
     update_cmd.add_argument("--cves", action="store_true", help="Update CVEs")
@@ -58,7 +59,7 @@ if __name__ == "__main__":
     if args.command == "import":
         if args.cves:
             logger.info("Importing CVEs")
-            ImportController().import_cves()
+            ImportController().import_cves(args.start_index)
         elif args.cpes:
             logger.info("Importing CPEs")
             ImportController().import_cpes()

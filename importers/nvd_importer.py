@@ -1,9 +1,10 @@
 import logging
+from datetime import datetime
 from typing import Dict
 
 import requests
 import os
-from abc import ABC
+from abc import ABC, abstractmethod
 from urllib import parse
 from dotenv import load_dotenv
 
@@ -29,6 +30,16 @@ class NvdImporter(ABC):
         self.api_url = api_url
         self.start_index = start_index
 
+    @staticmethod
+    @abstractmethod
+    def load_last_update() -> datetime:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def write_last_update(date: datetime) -> None:
+        raise NotImplementedError
+
     def _get_data(self, url: str) -> dict:
         headers = {"apiKey": API_KEY}
         try:
@@ -37,7 +48,7 @@ class NvdImporter(ABC):
             LOGGER.error(f"Error while requesting {url}: {e}")
             return {}
 
-        if response.headers['apiKey'] == "No":
+        if response.headers['apikey'] == "No":
             LOGGER.warning(f"Error while requesting {url}: Request without API Key")
 
         LOGGER.debug(f"Successfully requested {url}")

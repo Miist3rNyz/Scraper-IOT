@@ -13,7 +13,9 @@ class CveCollection(NvdCollection):
         super().__bool__()
 
     def insert(self, data: dict) -> None:
-        self.insert_many(data['vulnerabilities'])
+        cves = [cve["cve"] for cve in data['vulnerabilities']]
+        refactor_cves = [{'_id': cve.pop('id'), **cve} for cve in cves]
+        self.insert_many(refactor_cves)
 
     def replace(self, data: dict) -> None:
         filter = {"cve.id": {"$in": self.get_cve_ids(data)}}

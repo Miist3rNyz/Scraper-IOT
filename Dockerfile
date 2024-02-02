@@ -6,5 +6,5 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "main.py", "--help"]
+CMD ["python", "main.py", "import", "--cves"]
 

@@ -38,7 +38,7 @@ class NvdImporter(ABC):
             return {}
 
         if response.headers['apiKey'] == "No":
-            LOGGER.error(f"Error while requesting {url}: Request without API Key")
+            LOGGER.warning(f"Error while requesting {url}: Request without API Key")
 
         LOGGER.debug(f"Successfully requested {url}")
         return response.json()

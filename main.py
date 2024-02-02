@@ -37,9 +37,12 @@ if __name__ == "__main__":
     logger.addHandler(stream_handler)
 
     # Test database connection
-    if not ScraperDatabase().test_connection():
+    db = ScraperDatabase()
+    if not db.test_connection():
         logger.error("Database connection failed")
         exit(1)
+    else:
+        logger.info(f"Database connection successful: {db.name}")
 
     # Select command
     if args.command == "import":

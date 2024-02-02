@@ -36,7 +36,8 @@ class ImportController(object):
         remaining_results = 1
 
         while importer.start_index < remaining_results:
-            LOGGER.info(f"⏳ State of import: {importer.start_index * 100} / {remaining_results}")
+            state: float = (importer.start_index * 100) / remaining_results
+            LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
             data = importer.run_import()
             collection.insert(data)
@@ -55,7 +56,8 @@ class ImportController(object):
         remaining_results = 1
 
         while importer.start_index < remaining_results:
-            LOGGER.info(f"⏳ State of import: {importer.start_index * 100} / {remaining_results}")
+            state: float = (importer.start_index * 100) / remaining_results
+            LOGGER.info(f"⏳ State of import: {state} %")
 
             data = importer.run_import()
             collection.replace(data)

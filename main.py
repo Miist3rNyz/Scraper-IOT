@@ -9,10 +9,17 @@ if __name__ == "__main__":
     # Setup args parser
     parser = argparse.ArgumentParser()
 
+    parser.add_argument("--debug", action="store_true", help="Enable debug mode")
+
     import_parser = parser.add_subparsers(dest="command")
+
     import_cmd = import_parser.add_parser("import", help="Import data from NVD")
     import_cmd.add_argument("--cves", action="store_true", help="Import CVEs")
     import_cmd.add_argument("--cpes", action="store_true", help="Import CPEs")
+
+    update_cmd = import_parser.add_parser("update", help="Update data from NVD")
+    update_cmd.add_argument("--cves", action="store_true", help="Update CVEs")
+    update_cmd.add_argument("--cpes", action="store_true", help="Update CPEs")
 
     args = parser.parse_args()
 
@@ -33,6 +40,9 @@ if __name__ == "__main__":
     stream_handler.setLevel(logging.INFO)
     stream_handler.setFormatter(formatter)
 
+    if args.debug:
+        stream_handler.setLevel(logging.DEBUG)
+
     logger.addHandler(file_handler)
     logger.addHandler(stream_handler)
 
@@ -52,3 +62,10 @@ if __name__ == "__main__":
         elif args.cpes:
             logger.info("Importing CPEs")
             ImportController().import_cpes()
+    elif args.command == "update":
+        if args.cves:
+            logger.info("Updating CVEs")
+            ImportController().update_cves()
+        elif args.cpes:
+            logger.info("Updating CPEs")
+            ImportController().update_cpes()

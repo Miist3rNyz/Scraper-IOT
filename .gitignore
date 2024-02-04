@@ -1,0 +1,8 @@
+venv
+.idea
+*.ipynb
+**/__pycache__/
+logs
+etc
+*.env
+test.py

@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - shared_database:/data/db
+
+  importer:
+    container_name: importer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+    depends_on:
+      mongodb:
+        condition: service_started
+
+volumes:
+  shared_database:

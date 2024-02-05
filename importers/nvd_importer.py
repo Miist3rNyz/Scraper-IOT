@@ -49,10 +49,10 @@ class NvdImporter(ABC):
 
     def _get_data(self, url: str) -> dict:
         headers = {"apiKey": API_KEY}
-        try:
-            response = requests.get(url, headers=headers)
-        except requests.exceptions.RequestException as e:
-            LOGGER.error(f"Error while requesting {url}: {e}")
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        if response.status_code == 204:
+            LOGGER.warning(f"Error while requesting {url}: No Content")
             return {}
 
         try:

@@ -60,7 +60,9 @@ class NvdImporter(ABC):
     def __build_url(self) -> str:
         start_index = {'startIndex': self.start_index}
         options = {**start_index, **self.api_options}
-        return self.api_url + parse.urlencode(options)
+        url = self.api_url + parse.urlencode(options, safe=':*')  # safe param avoid : and * to be encoded
+        LOGGER.debug(f"Built URL: {url}")
+        return url
 
     def run_import(self) -> dict:
         url = self.__build_url()

@@ -18,8 +18,8 @@ class CveCollection(NvdCollection):
         self.insert_many(refactor_cves)
 
     def replace(self, data: dict) -> None:
-        filter = {"cve.id": {"$in": self.get_cve_ids(data)}}
-        self.delete_many(filter=filter)  # First delete all outdated CVEs we need to replace
+        filter_outdated_cves = {"cve.id": {"$in": self.get_cve_ids(data)}}
+        self.delete_many(filter=filter_outdated_cves)  # First delete all outdated CVEs we need to replace
         self.insert(data)  # Then insert the updated ones
 
     def get_cve_ids(self, data: dict) -> list:

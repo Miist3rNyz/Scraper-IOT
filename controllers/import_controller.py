@@ -65,9 +65,15 @@ class ImportController(object):
         total_results: int = importer.start_index + 1
 
         while importer.start_index < total_results:
+            data = importer.run_import()
             total_results = data['totalResults']
             if total_results == 0:  # Avoid saving empty data
                 break
+
+            collection.insert(data)
+
+            importer.start_index += importer.RESULT_PER_PAGE
+
             state: float = (importer.start_index * 100) / total_results
             LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
@@ -88,18 +94,19 @@ class ImportController(object):
         total_results: int = importer.start_index + 1
 
         while importer.start_index < total_results:
-            state: float = (importer.start_index * 100) / total_results
-            LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
             data = importer.run_import()
             total_results = data['totalResults']
             if total_results == 0:  # Avoid saving empty data
                 LOGGER.info("No data to replace")
                 break
+
             collection.replace(data)
 
+            state: float = (importer.start_index * 100) / total_results
+            LOGGER.info(f"⏳ State of import: {state:.1f} %")
+
             importer.start_index += importer.RESULT_PER_PAGE
-            total_results = data['totalResults']
 
             LOGGER.debug(f"Waiting {importer.TIME_BETWEEN_REQUESTS} seconds before next request")
             time.sleep(importer.TIME_BETWEEN_REQUESTS)  # NVD API rate limit is 10 requests per minute

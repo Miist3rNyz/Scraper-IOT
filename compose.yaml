@@ -18,6 +18,17 @@ services:
     depends_on:
       mongodb:
         condition: service_started
-
+  server:
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+    ports:
+      - "5000:5000"
+    depends_on:
+      mongodb:
+        condition: service_started
 volumes:
   shared_database:

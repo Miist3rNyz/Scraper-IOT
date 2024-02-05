@@ -1,8 +1,10 @@
+import logging
 from typing import NoReturn
 
 from db.nvd_collection import NvdCollection
 from db.scraper_database import ScraperDatabase
 
+LOGGER = logging.getLogger("scraper-iot")
 
 class CveCollection(NvdCollection):
 
@@ -18,7 +20,9 @@ class CveCollection(NvdCollection):
         self.insert_many(refactor_cves)
 
     def replace(self, data: dict) -> None:
-        filter_outdated_cves = {"cve.id": {"$in": self.get_cve_ids(data)}}
+        cves_ids = self.get_cve_ids(data)
+        filter_outdated_cves = {"_id": {"$in": cves_ids}}
+        LOGGER.debug(f"Deleting outdated {len(cves_ids)} CVEs and replace them: {cves_ids}")
         self.delete_many(filter=filter_outdated_cves)  # First delete all outdated CVEs we need to replace
         self.insert(data)  # Then insert the updated ones
 

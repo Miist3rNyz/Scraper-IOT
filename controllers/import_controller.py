@@ -65,6 +65,9 @@ class ImportController(object):
         total_results: int = importer.start_index + 1
 
         while importer.start_index < total_results:
+            total_results = data['totalResults']
+            if total_results == 0:  # Avoid saving empty data
+                break
             state: float = (importer.start_index * 100) / total_results
             LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
@@ -89,6 +92,10 @@ class ImportController(object):
             LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
             data = importer.run_import()
+            total_results = data['totalResults']
+            if total_results == 0:  # Avoid saving empty data
+                LOGGER.info("No data to replace")
+                break
             collection.replace(data)
 
             importer.start_index += importer.RESULT_PER_PAGE

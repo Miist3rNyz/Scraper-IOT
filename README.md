@@ -13,3 +13,9 @@ Due to the limit of the NVD API, the application will be able to perform only 10
 This may impact the time of the first start of the application and the size of the database.
 - First run time needed : ~30 min
 - Database size : ~1 Go
+
+
+# What you should not do ?
+
+- Do not run the application without the docker-compose file, it may not work properly.
+- Do not modify the file .metadata.json, it is used to store the last update date of the database.

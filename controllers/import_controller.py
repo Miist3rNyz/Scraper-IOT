@@ -71,9 +71,7 @@ class ImportController(object):
             collection.insert(data)
 
             importer.start_index += importer.RESULT_PER_PAGE
-            remaining_results = data['totalResults'] - importer.start_index + 1  # 1 because start_index is 0-based
-            total_results = int(data['totalResults'])
-            LOGGER.debug(f"totalResults: {total_results}, remaining_results: {remaining_results}")
+            total_results = data['totalResults']
 
             LOGGER.debug(f"Waiting {importer.TIME_BETWEEN_REQUESTS} seconds before next request")
             time.sleep(importer.TIME_BETWEEN_REQUESTS)  # NVD API rate limit is 10 requests per minute

@@ -42,6 +42,7 @@ class ImportController(object):
         date_now = datetime.now()
         cpe_importer = CpeImporter()
         api_options = {
+            "matchStringSearch": "cpe:2.3:h:*",
             "lastModStartDate": cpe_importer.load_last_update(),
             "lastModEndDate": NvdDatetime.now(),
         }

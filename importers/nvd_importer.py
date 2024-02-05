@@ -5,9 +5,11 @@ from typing import Dict
 
 import requests
 import os
-from abc import ABC, abstractmethod
+from abc import ABC
 from urllib import parse
 from dotenv import load_dotenv
+
+from models.nvd_datetime import NvdDatetime
 
 load_dotenv()
 
@@ -33,10 +35,10 @@ class NvdImporter(ABC):
         self.start_index = start_index
         self.last_update_key = last_update_key
 
-    def load_last_update(self) -> datetime:
+    def load_last_update(self) -> NvdDatetime:
         with open(".metadata.json", "r") as file:
             content = json.load(file)
-        return datetime.fromisoformat(content[self.last_update_key])
+        return NvdDatetime(datetime.fromisoformat(content[self.last_update_key]))
 
     def write_last_update(self, date: datetime) -> None:
         with open(".metadata.json", "r") as file:

@@ -9,6 +9,7 @@ from db.nvd_collection import NvdCollection
 from importers.cpe_importer import CpeImporter
 from importers.cve_importer import CveImporter
 from importers.nvd_importer import NvdImporter
+from models.nvd_datetime import NvdDatetime
 
 LOGGER = logging.getLogger("scraper-iot")
 T = TypeVar('T', bound=NvdImporter)
@@ -22,8 +23,8 @@ class ImportController(object):
         date_now = datetime.now()
         cve_importer = CveImporter()
         api_options = {
-            "lastModStartDate": cve_importer.load_last_update().strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "lastModEndDate": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+            "lastModStartDate": cve_importer.load_last_update(),
+            "lastModEndDate": NvdDatetime.now(),
         }
         cve_importer.api_options= api_options
         self.__import_many_and_replace(cve_importer, CveCollection())
@@ -42,7 +43,7 @@ class ImportController(object):
         cpe_importer = CpeImporter()
         api_options = {
             "lastModStartDate": cpe_importer.load_last_update(),
-            "lastModEndDate": datetime.now().isoformat()
+            "lastModEndDate": NvdDatetime.now(),
         }
         cpe_importer.api_options = api_options
         self.__import_many_and_replace(cpe_importer, CpeCollection())

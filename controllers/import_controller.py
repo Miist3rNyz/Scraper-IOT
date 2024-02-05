@@ -22,8 +22,8 @@ class ImportController(object):
         date_now = datetime.now()
         cve_importer = CveImporter()
         api_options = {
-            "lastModEndDate": datetime.now().isoformat()
             "lastModStartDate": cve_importer.load_last_update().strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "lastModEndDate": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
         }
         cve_importer.api_options= api_options
         self.__import_many_and_replace(cve_importer, CveCollection())
@@ -81,17 +81,17 @@ class ImportController(object):
     def __import_many_and_replace(self, importer: T, collection: U) -> None:
         LOGGER.info("🚀 Starting import")
 
-        remaining_results = 1
+        total_results: int = importer.start_index + 1
 
-        while importer.start_index < remaining_results:
-            state: float = (importer.start_index * 100) / remaining_results
-            LOGGER.info(f"⏳ State of import: {state} %")
+        while importer.start_index < total_results:
+            state: float = (importer.start_index * 100) / total_results
+            LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
             data = importer.run_import()
             collection.replace(data)
 
             importer.start_index += importer.RESULT_PER_PAGE
-            remaining_results = data['totalResults'] - importer.start_index + 1  # 1 because start_index is 0-based
+            total_results = data['totalResults']
 
             LOGGER.debug(f"Waiting {importer.TIME_BETWEEN_REQUESTS} seconds before next request")
             time.sleep(importer.TIME_BETWEEN_REQUESTS)  # NVD API rate limit is 10 requests per minute

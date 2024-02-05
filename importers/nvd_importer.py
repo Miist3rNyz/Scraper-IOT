@@ -1,3 +1,4 @@
+import json
 import logging
 from datetime import datetime
 from typing import Dict
@@ -16,29 +17,33 @@ API_KEY = os.getenv("NVD_API_KEY")
 
 class NvdImporter(ABC):
 
-    TIME_BETWEEN_REQUESTS = 6
-    RESULT_PER_PAGE = 2000
+    TIME_BETWEEN_REQUESTS = 6  # NVD API preconizes 10 requests per minute max
 
     api_url: str
     api_options: Dict[str, str]
     start_index: int
+    last_update: datetime
+    last_update_key: str
 
-    def __init__(self, api_url: str, start_index=0, api_options: dict = None):
+    def __init__(self, api_url: str, last_update_key: str, start_index=0, api_options: dict = None):
         if api_options is None:
             api_options = {}
         self.api_options = api_options
         self.api_url = api_url
         self.start_index = start_index
+        self.last_update_key = last_update_key
 
-    @staticmethod
-    @abstractmethod
-    def load_last_update() -> datetime:
-        raise NotImplementedError
+    def load_last_update(self) -> datetime:
+        with open(".metadata.json", "r") as file:
+            content = json.load(file)
+        return datetime.fromisoformat(content[self.last_update_key])
 
-    @staticmethod
-    @abstractmethod
-    def write_last_update(date: datetime) -> None:
-        raise NotImplementedError
+    def write_last_update(self, date: datetime) -> None:
+        with open(".metadata.json", "r") as file:
+            content = json.load(file)
+        content[self.last_update_key] = date.isoformat()
+        with open(".metadata.json", "w") as file:
+            json.dump(content, file, indent=4)
 
     def _get_data(self, url: str) -> dict:
         headers = {"apiKey": API_KEY}

@@ -20,34 +20,43 @@ class ImportController(object):
     def update_cves(self) -> None:
         # The new last_mod_date is taken before update in case of long-running time to update
         date_now = datetime.now()
+        cve_importer = CveImporter()
         api_options = {
-            "lastModStartDate": CveImporter.load_last_update(),
             "lastModEndDate": datetime.now().isoformat()
+            "lastModStartDate": cve_importer.load_last_update().strftime("%Y-%m-%dT%H:%M:%SZ"),
         }
-        self.__import_many_and_replace(CveImporter(api_options), CveCollection())
-        CveImporter.write_last_update(date_now)
-
-    def update_cpes(self) -> None:
-        # The new last_mod_date is taken before update in case of long-running time to update
-        date_now = datetime.now()
-        api_options = {
-            "lastModStartDate": CpeImporter.load_last_update(),
-            "lastModEndDate": datetime.now().isoformat()
-        }
-        self.__import_many_and_replace(CpeImporter(), CpeCollection()) # TODO: Add api_options
-        CpeImporter.write_last_update(date_now)
-
-    def import_cpes(self) -> None:
-        # The new last_mod_date is taken before update in case of long-running time to update
-        date_now = datetime.now()
-        self.__import_many_and_save(CpeImporter(), CpeCollection())
-        CpeImporter.write_last_update(date_now)
+        cve_importer.api_options= api_options
+        self.__import_many_and_replace(cve_importer, CveCollection())
+        cve_importer.write_last_update(date_now)
 
     def import_cves(self, start_index=0) -> None:
         # The new last_mod_date is taken before update in case of long-running time to update
         date_now = datetime.now()
-        self.__import_many_and_save(CveImporter(start_index=start_index), CveCollection())
-        CveImporter.write_last_update(date_now)
+        cve_importer = CveImporter(start_index=start_index)
+        self.__import_many_and_save(cve_importer, CveCollection())
+        cve_importer.write_last_update(date_now)
+
+    def update_cpes(self) -> None:
+        # The new last_mod_date is taken before update in case of long-running time to update
+        date_now = datetime.now()
+        cpe_importer = CpeImporter()
+        api_options = {
+            "lastModStartDate": cpe_importer.load_last_update(),
+            "lastModEndDate": datetime.now().isoformat()
+        }
+        cpe_importer.api_options = api_options
+        self.__import_many_and_replace(cpe_importer, CpeCollection())
+        cpe_importer.write_last_update(date_now)
+
+    def import_cpes(self) -> None:
+        # The new last_mod_date is taken before update in case of long-running time to update
+        date_now = datetime.now()
+        api_options = {
+            "matchStringSearch": "cpe:2.3:h:*",
+        }
+        cpe_importer = CpeImporter(api_options=api_options)
+        self.__import_many_and_save(cpe_importer, CpeCollection())
+        cpe_importer.write_last_update(date_now)
 
     def __import_many_and_save(self, importer: T, collection: U) -> None:
         LOGGER.info("🚀 Starting import")

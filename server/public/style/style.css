@@ -36,7 +36,66 @@ body {
   .navigation li {
     margin-bottom: 10px;
   }
-  
+  .navigation a {
+    text-decoration: none;
+    color: black;
+  }
+
+  /* Style lorsque la souris survole le lien */
+.navigation a:hover {
+  color:#1F51FF;
+  /* Ajoutez ici les styles que vous souhaitez afficher lorsque la souris survole le lien */
+}
+
+/* Texte différent pour chaque lien en hover */
+.navigation a[data-hover-text="Texte pour H"]:hover::before {
+  content: "Home and SOHO devices; routers, on-line cameras and monitoring, other customer grade-appliances. ";
+  display: block;
+  position: absolute;
+  background-color: rgb(0, 0, 0); 
+  padding: 10px;
+}
+
+.navigation a[data-hover-text="Texte pour S"]:hover::before {
+  content: "SCADA and industrial systems, automation, sensor systems, non-home IoT appliances, car and vehicles (subsystems), medical devices, industrial video recorders and surveillance systems.";
+  display: block;
+  position: absolute;
+  background-color:  rgb(0, 0, 0);
+  padding: 10px;
+}
+
+.navigation a[data-hover-text="Texte pour E"]:hover::before {
+  content: "Enterprise, Service Provider (SP) hardware (routers, switches, enterprise Wi-Fi and networking) this constitutes mainly the network level of IoT infrastructure.";
+  display: block;
+  position: absolute;
+  background-color:  rgb(0, 0, 0);
+  padding: 10px;
+}
+
+.navigation a[data-hover-text="Texte pour M"]:hover::before {
+  content: "mobile phones, tablets, smart watches and portable devices this constitutes the “controllers” of IoT systems. ";
+  display: block;
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+}
+
+.navigation a[data-hover-text="Texte pour P"]:hover::before {
+  content: "PCs, laptops, PC-like computing appliances and PC servers (enterprise) this constitutes the “controllers” of IoT systems.";
+  display: block;
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+}
+
+.navigation a[data-hover-text="Texte pour A"]:hover::before {
+  content: "other, non-home appliances: enterprise printers and printing systems, copy machines, non-customer storage and multimedia appliances.";
+  display: block;
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+}
+
   .articles {
     width: 83.334%; /* 5/6 de la largeur */
     padding: 20px;

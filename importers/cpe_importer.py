@@ -11,3 +11,6 @@ class CpeImporter(NvdImporter):
         super().__init__(api_url='https://services.nvd.nist.gov/rest/json/cpematch/2.0?',
                          api_options=api_options,
                          last_update_key=last_update_key)
+
+    def set_next_start_index(self, data: dict) -> None:
+        self.start_index += len(data['matchStrings'])

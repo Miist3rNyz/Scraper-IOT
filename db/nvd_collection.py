@@ -12,3 +12,6 @@ class NvdCollection(Collection):
     @abstractmethod
     def replace(self, data: dict) -> None:
         raise NotImplementedError("This method should be implemented in a child class")
+
+    def is_empty(self) -> bool:
+        return self.estimated_document_count() == 0

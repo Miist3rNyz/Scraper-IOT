@@ -8,5 +8,5 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "main.py", "--debug", "import", "--cves"]
+CMD ["python", "main.py", "run"]
 

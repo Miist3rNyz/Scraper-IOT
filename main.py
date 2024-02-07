@@ -3,6 +3,7 @@ import argparse
 
 from controllers.import_controller import ImportController
 from db.scraper_database import ScraperDatabase
+from import_scheduler import ImportScheduler
 
 if __name__ == "__main__":
 
@@ -21,6 +22,8 @@ if __name__ == "__main__":
     update_cmd = import_parser.add_parser("update", help="Update data from NVD")
     update_cmd.add_argument("--cves", action="store_true", help="Update CVEs")
     update_cmd.add_argument("--cpes", action="store_true", help="Update CPEs")
+
+    run_cmd = import_parser.add_parser("run", help="Run the scheduler")
 
     args = parser.parse_args()
 
@@ -70,3 +73,8 @@ if __name__ == "__main__":
         elif args.cpes:
             logger.info("Updating CPEs")
             ImportController().update_cpes()
+    elif args.command == "run":
+        logger.info("Running the scheduler")
+        ImportScheduler().schedule_importer()
+
+    logger.info("Exiting...")

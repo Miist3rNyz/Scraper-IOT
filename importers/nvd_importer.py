@@ -5,7 +5,7 @@ from typing import Dict
 
 import requests
 import os
-from abc import ABC
+from abc import ABC, abstractmethod
 from urllib import parse
 from dotenv import load_dotenv
 
@@ -75,5 +75,10 @@ class NvdImporter(ABC):
         url = self.__build_url()
         data = self._get_data(url)
         return data
+
+    @abstractmethod
+    def set_next_start_index(self, data: dict) -> None:
+        raise NotImplementedError
+
 
 

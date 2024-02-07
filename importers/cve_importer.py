@@ -11,4 +11,7 @@ class CveImporter(NvdImporter):
                          api_options=api_options,
                          last_update_key=last_update_key)
 
+    def set_next_start_index(self, data: dict) -> None:
+        self.start_index += len(data['vulnerabilities'])
+
 

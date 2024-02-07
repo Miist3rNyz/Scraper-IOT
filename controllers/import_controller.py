@@ -73,8 +73,9 @@ class ImportController(object):
 
             collection.insert(data)
 
-            importer.start_index += importer.RESULT_PER_PAGE
+            importer.set_next_start_index(data)
 
+            LOGGER.debug(f"Start index: {importer.start_index}, total results: {total_results}")
             state: float = (importer.start_index * 100) / total_results
             LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
@@ -99,10 +100,12 @@ class ImportController(object):
 
             collection.replace(data)
 
+            importer.set_next_start_index(data)
+
+            LOGGER.debug(f"Start index: {importer.start_index}, total results: {total_results}")
             state: float = (importer.start_index * 100) / total_results
             LOGGER.info(f"⏳ State of import: {state:.1f} %")
 
-            importer.start_index += importer.RESULT_PER_PAGE
 
             if importer.start_index < total_results:  # Avoid waiting if it's the last request
                 LOGGER.debug(f"Waiting {importer.TIME_BETWEEN_REQUESTS} seconds before next request")

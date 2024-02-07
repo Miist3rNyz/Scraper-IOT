@@ -30,8 +30,8 @@ class ImportScheduler(object):
             ImportController().update_cpes()
 
         LOGGER.info("✅ Everything is up to date, starting scheduler")
-        LOGGER.info(f"🕒 Scheduling CVE updates every {self.SCHEDULE_INTERVAL} hours")
-        LOGGER.info(f"🕒 Scheduling CPE updates every {self.SCHEDULE_INTERVAL} hours")
+        self.schedule_updates()
+
         LOGGER.info("💡 Closing this process will stop the scheduler and the updates")
 
         while True:
@@ -39,5 +39,7 @@ class ImportScheduler(object):
             time.sleep(1)
 
     def schedule_updates(self):
-        schedule.every(self.SCHEDULE_INTERVAL).hours.at_time_zone("UTC").do(ImportController().update_cves())
-        schedule.every(self.SCHEDULE_INTERVAL).hours.at_time_zone("UTC").do(ImportController().update_cpes())
+        LOGGER.info(f"🕒 Scheduling CVE updates every {self.SCHEDULE_INTERVAL} hours")
+        schedule.every(self.SCHEDULE_INTERVAL).hours.do(ImportController().update_cves)
+        LOGGER.info(f"🕒 Scheduling CPE updates every {self.SCHEDULE_INTERVAL} hours")
+        schedule.every(self.SCHEDULE_INTERVAL).hours.do(ImportController().update_cpes)

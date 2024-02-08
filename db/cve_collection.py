@@ -3,6 +3,7 @@ from typing import NoReturn
 
 from db.nvd_collection import NvdCollection
 from db.scraper_database import ScraperDatabase
+from controllers.classifier import CVEclassifier
 
 LOGGER = logging.getLogger("scraper-iot")
 
@@ -15,9 +16,11 @@ class CveCollection(NvdCollection):
         super().__bool__()
 
     def insert(self, data: dict) -> None:
+        cve_classifier=CVEclassifier()
         cves = [cve["cve"] for cve in data['vulnerabilities']]
         refactor_cves = [{'_id': cve.pop('id'), **cve} for cve in cves]
-        self.insert_many(refactor_cves)
+        refactor_cves_classify=cve_classifier.classify_all_cves(refactor_cves)
+        self.insert_many(refactor_cves_classify)
 
     def replace(self, data: dict) -> None:
         cves_ids = self.get_cve_ids(data)

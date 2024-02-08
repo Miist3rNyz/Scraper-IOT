@@ -10,6 +10,7 @@ from importers.cpe_importer import CpeImporter
 from importers.cve_importer import CveImporter
 from importers.nvd_importer import NvdImporter
 from models.nvd_datetime import NvdDatetime
+from controllers.classifier import CVEclassifier
 
 LOGGER = logging.getLogger("scraper-iot")
 T = TypeVar('T', bound=NvdImporter)
@@ -70,7 +71,6 @@ class ImportController(object):
             total_results = data['totalResults']
             if total_results == 0:  # Avoid saving empty data
                 break
-
             collection.insert(data)
 
             importer.set_next_start_index(data)
@@ -86,6 +86,7 @@ class ImportController(object):
         LOGGER.info("🏁 Finished import")
 
     def __import_many_and_replace(self, importer: T, collection: U) -> None:
+        cve_classifier=CVEclassifier()
         LOGGER.info("🚀 Starting import")
 
         total_results: int = importer.start_index + 1
@@ -97,7 +98,6 @@ class ImportController(object):
             if total_results == 0:  # Avoid saving empty data
                 LOGGER.info("No data to replace")
                 break
-
             collection.replace(data)
 
             importer.set_next_start_index(data)

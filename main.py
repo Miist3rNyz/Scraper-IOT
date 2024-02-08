@@ -4,8 +4,16 @@ import argparse
 from controllers.import_controller import ImportController
 from db.scraper_database import ScraperDatabase
 from import_scheduler import ImportScheduler
+from flask import Flask
+from controllers.routes import api_bp  # Importez le Blueprint défini dans controllers/routes.py
+from db.cve_collection import CveCollection
+
+
 
 if __name__ == "__main__":
+    cve_collection = CveCollection()
+    app=Flask(__name__)
+    app.register_blueprint(api_bp, url_prefix='/api')
 
     # Setup args parser
     parser = argparse.ArgumentParser()
@@ -24,7 +32,7 @@ if __name__ == "__main__":
     update_cmd.add_argument("--cpes", action="store_true", help="Update CPEs")
 
     run_cmd = import_parser.add_parser("run", help="Run the scheduler")
-
+    start_cmd = import_parser.add_parser("start", help="Start Flask server")
     args = parser.parse_args()
 
     # Setup logging
@@ -76,5 +84,8 @@ if __name__ == "__main__":
     elif args.command == "run":
         logger.info("Running the scheduler")
         ImportScheduler().schedule_importer()
+    elif args.command == "start":
+        logger.info("Start Flask server")
+        app.run(host="0.0.0.0", port=5000)
 
     logger.info("Exiting...")

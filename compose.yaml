@@ -12,7 +12,17 @@ services:
     container_name: importer
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.importer
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+    depends_on:
+      mongodb:
+        condition: service_started
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
     environment:
       - MONGODB_URI=mongodb://mongodb:27017
     ports:
@@ -20,5 +30,6 @@ services:
     depends_on:
       mongodb:
         condition: service_started
+        
 volumes:
   shared_database:

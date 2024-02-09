@@ -48,7 +48,7 @@ body {
 }
 
 /* Texte différent pour chaque lien en hover */
-.navigation a[data-hover-text="Texte pour H"]:hover::before {
+.navigation a[data-hover-text="H"]:hover::before {
   content: "Home and SOHO devices; routers, on-line cameras and monitoring, other customer grade-appliances. ";
   display: block;
   position: absolute;
@@ -56,7 +56,7 @@ body {
   padding: 10px;
 }
 
-.navigation a[data-hover-text="Texte pour S"]:hover::before {
+.navigation a[data-hover-text="S"]:hover::before {
   content: "SCADA and industrial systems, automation, sensor systems, non-home IoT appliances, car and vehicles (subsystems), medical devices, industrial video recorders and surveillance systems.";
   display: block;
   position: absolute;
@@ -64,7 +64,7 @@ body {
   padding: 10px;
 }
 
-.navigation a[data-hover-text="Texte pour E"]:hover::before {
+.navigation a[data-hover-text="E"]:hover::before {
   content: "Enterprise, Service Provider (SP) hardware (routers, switches, enterprise Wi-Fi and networking) this constitutes mainly the network level of IoT infrastructure.";
   display: block;
   position: absolute;
@@ -72,7 +72,7 @@ body {
   padding: 10px;
 }
 
-.navigation a[data-hover-text="Texte pour M"]:hover::before {
+.navigation a[data-hover-text="M"]:hover::before {
   content: "mobile phones, tablets, smart watches and portable devices this constitutes the “controllers” of IoT systems. ";
   display: block;
   position: absolute;
@@ -80,7 +80,7 @@ body {
   padding: 10px;
 }
 
-.navigation a[data-hover-text="Texte pour P"]:hover::before {
+.navigation a[data-hover-text="P"]:hover::before {
   content: "PCs, laptops, PC-like computing appliances and PC servers (enterprise) this constitutes the “controllers” of IoT systems.";
   display: block;
   position: absolute;
@@ -88,7 +88,7 @@ body {
   padding: 10px;
 }
 
-.navigation a[data-hover-text="Texte pour A"]:hover::before {
+.navigation a[data-hover-text="A"]:hover::before {
   content: "other, non-home appliances: enterprise printers and printing systems, copy machines, non-customer storage and multimedia appliances.";
   display: block;
   position: absolute;
@@ -102,7 +102,7 @@ body {
   }
   
   .article {
-    display: flex;
+    display: none;
     margin-bottom: 20px;
     border-style: inset;
   }
@@ -134,4 +134,46 @@ body {
     height: auto;
     margin-right: 20px;
   }
+  
+  .popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .popup button {
+    float: right;
+    align-self: flex-end;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+  }
+  
+.popup p, ul{
+  flex: left
+}
+  .popup h2{
+    float: left;
+    margin-top: 0;
+  }
+
+
+  /* filtre*/
+
+  .filter-panel {
+    display: none;
+  }
+  
   

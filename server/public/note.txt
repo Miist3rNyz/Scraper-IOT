@@ -12,3 +12,24 @@
           </div>
         </div>
       <% }); %> -->
+
+
+
+      v2
+
+    <div class="articles">
+      <!-- Articles de la base de données -->
+      <% articles.forEach(article => { %>
+        <div class="article" onclick="showPopup('<%= article.title %>', '<%= article.author %>', '<%= article.date %>', '<%= article.desc %>')"> //a check avec back et json
+          <img src="<%= article.image %>" alt="<%= article.title %>">
+          <div class="article-details">
+            <h2><%= article.title %></h2>
+            <ul>
+              <li>Date: <%= article.date %></li>
+              <li>Auteur: <%= article.author %></li>
+              <li>Catégorie: <%= article.category %></li>
+            </ul>
+          </div>
+        </div>
+      <% }); %>
+    </div>

@@ -1,0 +1,46 @@
+version: '3.7'
+services:
+  mongodb:
+    container_name: mongodb
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - shared_database:/data/db
+
+  importer:
+    container_name: importer
+    build:
+      context: .
+      dockerfile: Dockerfile.importer
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+    depends_on:
+      mongodb:
+        condition: service_started
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+    ports:
+      - "5000:5000"
+    depends_on:
+      mongodb:
+        condition: service_started
+ 
+ # frontend:
+  #  container_name: frontend
+    # build:
+     # context: .
+      #dockerfile: Dockerfile.frontend
+    #ports:
+    #- "3100:3100"
+    #depends_on:
+     # server:
+      #  condition: service_started
+        
+volumes:
+  shared_database:

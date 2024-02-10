@@ -16,11 +16,25 @@ def get_data_s():
     json_documents = [json.dumps(doc, default=str) for doc in datas]
     return json_documents
 
+@api_bp.route('/S', methods=['POST'])
+def get_cve_with_brand_and_category_S():
+    brand=request.args.get('brand')
+    product=request.args.get('product')
+    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'S')
+    return jsonify(datas)
+
 @api_bp.route('/P', methods=['GET'])
 def get_data_p():
     datas=cve_collection.find({"category": "P"})
     json_documents = [json.dumps(doc, default=str) for doc in datas]
     return json_documents
+
+@api_bp.route('/P', methods=['POST'])
+def get_cve_with_brand_and_category_P():
+    brand=request.args.get('brand')
+    product=request.args.get('product')
+    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'P')
+    return jsonify(datas)
 
 @api_bp.route('/H', methods=['GET'])
 def get_data_h():
@@ -28,23 +42,51 @@ def get_data_h():
     json_documents = [json.dumps(doc, default=str) for doc in datas]
     return json_documents
 
+@api_bp.route('/H', methods=['POST'])
+def get_cve_with_brand_and_category_H():
+    brand=request.args.get('brand')
+    product=request.args.get('product')
+    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'H')
+    return jsonify(datas)
+
 @api_bp.route('/E', methods=['GET'])
 def get_data_e():
     datas=cve_collection.find({ "category": "E"})
     json_documents = [json.dumps(doc, default=str) for doc in datas]
     return json_documents
 
+@api_bp.route('/E', methods=['POST'])
+def get_cve_with_brand_and_category_E():
+    brand=request.args.get('brand')
+    product=request.args.get('product')
+    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'E')
+    return jsonify(datas)
+
 @api_bp.route('/M', methods=['GET'])
 def get_data_m():
     datas=cve_collection.find({ "category": "M"})
     json_documents = [json.dumps(doc, default=str) for doc in datas]
     return json_documents
+@api_bp.route('/M', methods=['POST'])
+def get_cve_with_brand_and_category_M():
+    brand=request.args.get('brand')
+    product=request.args.get('product')
+    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'M')
+    return jsonify(datas)
 
 @api_bp.route('/A', methods=['GET'])
 def get_data_a():
     datas=cve_collection.find({ "category": "A"})
     json_documents = [json.dumps(doc, default=str) for doc in datas]
     return json_documents
+
+
+@api_bp.route('/A', methods=['POST'])
+def get_cve_with_brand_and_category_A():
+    brand=request.args.get('brand')
+    product=request.args.get('product')
+    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'A')
+    return jsonify(datas)
 
 @api_bp.route('/cpe', methods=['GET'])
 def send_cpes_with_id_and_brand_and_product():
@@ -62,6 +104,7 @@ def send_cpes_with_id_and_brand_and_product():
                 "id": item["_id"]
             })
     return brand_id_list
+
 @api_bp.route('/cpe', methods=['POST'])
 def get_cpes_with_brand_and_product():
     motif_marque = request.args.get('marque')

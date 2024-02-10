@@ -1,11 +1,14 @@
 from flask import Blueprint, jsonify, request
 import json
+import re
 from db.cve_collection import CveCollection
+from db.cpe_collection import CpeCollection
 
 # Créez un objet Blueprint pour les routes
 api_bp = Blueprint('api', __name__)
 
 cve_collection = CveCollection()
+cpe_collection = CpeCollection()
 
 @api_bp.route('/S', methods=['GET'])
 def get_data_s():
@@ -41,4 +44,28 @@ def get_data_m():
 def get_data_a():
     datas=cve_collection.find({ "category": "A"})
     json_documents = [json.dumps(doc, default=str) for doc in datas]
+    return json_documents
+
+@api_bp.route('/cpe', methods=['GET'])
+def send_cpes_with_id_and_brand_and_product():
+    datas=cpe_collection.get_all_cpe()
+    brand_id_list = []
+    for item in datas:
+        cpe_string = item["criteria"]
+        # Utilisation de regex pour extraire la marque et l'ID
+        match = re.search(r"(?:[^:]+:){3}([^:]+):(.*?):", cpe_string)
+        if match:
+            print(match.group(0))
+            brand_id_list.append({
+                "brand": match.group(1),
+                "product": match.group(2),
+                "id": item["_id"]
+            })
+    return brand_id_list
+@api_bp.route('/cpe', methods=['POST'])
+def get_cpes_with_brand_and_product():
+    motif_marque = request.args.get('marque')
+    motif_produit = request.args.get('produit')
+    test=cpe_collection.get_cpe_by_brand_and_product(motif_marque,motif_produit)
+    json_documents = [json.dumps(doc, default=str) for doc in test]
     return json_documents

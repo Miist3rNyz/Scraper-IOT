@@ -1,22 +1,3 @@
-/* function showPopup(title, author, date, desc) {
-    var popup = document.getElementById('popup');
-    var popupTitle = document.getElementById('popup-title');
-    var popupAuthor = document.getElementById('popup-author');
-    var popupDate = document.getElementById('popup-date');
-    var popupDesc = document.getElementById('popup-desc')
-    popupTitle.textContent = title;
-    popupAuthor.textContent = 'Auteur: ' + author;
-    popupDate.textContent = 'Date: ' + date;
-    popupDesc.textContent='Description: ' + desc;
-    
-    popup.style.display = 'block';
-  }
-
-function hidePopup(){
-    var popup = document.getElementById('popup');
-    popup.style.display='none';
-} */
-
 //gestion des filtres
 
 function sendCategory(category) {
@@ -94,14 +75,14 @@ const filterList = document.getElementById('filter-list');
 
 
 searchInput.addEventListener('input', function() {
-  const searchText = searchInput.value.toLowerCase(); // Convertir le texte en minuscules
+  const searchText = searchInput.value.toLowerCase(); 
 
 
   const filters = filterList.getElementsByTagName('li');
 
 
   for (const filter of filters) {
-    const filterName = filter.textContent.toLowerCase(); // Convertir le texte du filtre en minuscules
+    const filterName = filter.textContent.toLowerCase(); 
 
     if (filterName.includes(searchText)) {
       filter.style.display = 'block'; 
@@ -173,7 +154,7 @@ function generateOneArticle(cveData) {
   article.classList.add('article');
 
   const img = document.createElement('img');
-  img.src = 'test.png'; // Remplacez 'test.png' par le chemin de l'image approprié pour chaque CVE
+  img.src = 'test.png';
   img.alt = "Image de l'article";
   article.appendChild(img);
 
@@ -181,12 +162,12 @@ function generateOneArticle(cveData) {
   articleDetails.classList.add('article-details');
 
   const title = document.createElement('h2');
-  title.textContent = cveData[0]; // Supposant que le titre de l'article est la première entrée dans les données du CVE
+  title.textContent = cveData[0]; /
   articleDetails.appendChild(title);
 
   const detailsList = document.createElement('ul');
 
-  // Ajoute des éléments de liste pour chaque détail (par exemple: ID, Date de publication, Description, etc.)
+ 
   const details = ['Marque','Date de publication', 'Dernière modification', 'Description', 'CVSS', 'Sévérité de base'];
   for (let i = 0; i < details.length; i++) {
     const listItem = document.createElement('li');

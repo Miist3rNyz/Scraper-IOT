@@ -44,7 +44,7 @@ body {
   /* Style lorsque la souris survole le lien */
 .navigation a:hover {
   color:#1F51FF;
-  /* Ajoutez ici les styles que vous souhaitez afficher lorsque la souris survole le lien */
+
 }
 
 /* Texte différent pour chaque lien en hover */
@@ -104,14 +104,14 @@ body {
   }
   
   .article {
-    display: flex; /* Utiliser flexbox */
-    align-items: center; /* Aligner les éléments sur l'axe vertical */
+    display: flex; 
+    align-items: center;
     margin-bottom: 20px;
     border-style: inset;
   }
   
   .article img {
-    width: 150px; /* Ajustez la taille de l'image selon vos besoins */
+    width: 150px; 
     height: auto;
     margin-right: 20px;
   }
@@ -133,44 +133,11 @@ body {
     margin-bottom: 5px;
   }
   .article img {
-    width: 150px; /* Ajustez la taille de l'image selon vos besoins */
+    width: 150px; 
     height: auto;
     margin-right: 20px;
   }
-  
-  /* .popup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-  
-  .popup button {
-    float: right;
-    align-self: flex-end;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
-  }
-  
-.popup p, ul{
-  flex: left
-}
-  .popup h2{
-    float: left;
-    margin-top: 0;
-  } */
+
 
 
 
@@ -188,12 +155,12 @@ body {
   background-color: #f0f0f0;
 }
 
-/* Style pour le titre Filtres */
+
 .filter-panel h3 {
   margin-top: 0;
 }
 
-/* Style pour la liste des filtres */
+
 #filter-list {
   list-style-type: none;
   padding: 0;
@@ -202,14 +169,14 @@ body {
 #filter-list li {
   margin-bottom: 5px;
   display: flex;
-  align-items: center; /* Aligner les éléments verticalement */
+  align-items: center; 
 }
 
 
-/* Style pour les cases à cocher */
+
 #filter-list input[type="checkbox"] {
   margin-right: 5px;
-  order: -1; /* Déplacer la case à cocher vers la gauche */
+  order: -1; 
 }
 
 
@@ -239,9 +206,9 @@ body {
 /* Style pour la barre de recherche */
 #search-input {
   width: 100%; /* Prendre toute la largeur du conteneur */
-  box-sizing: border-box; /* Inclure la largeur du padding et de la bordure dans la largeur totale */
-  padding: 8px; /* Espacement intérieur */
-  margin-bottom: 10px; /* Espacement inférieur */
-  border: 1px solid #ccc; /* Bordure */
-  border-radius: 5px; /* Coins arrondis */
+  box-sizing: border-box; 
+  padding: 8px; 
+  margin-bottom: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
 }

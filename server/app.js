@@ -40,7 +40,7 @@ app.post('/cat', async (req, res) => {
 
 function processFilters(category) {
   return new Promise((resolve, reject) => {
-      // Effectuer la requête pour obtenir les données CVE
+     
       var cpeSet = new Set();
       console.log(category);
       axios.get(url_cve + category)
@@ -55,9 +55,9 @@ function processFilters(category) {
                       cpeMatches.forEach(function (cpe) {
                           var cpeParts = cpe.split(':');
                           if (cpeParts.length >= 5) {
-                              // Récupérer les parties 3 et 4 (indexés à partir de 0)
+                              
                               var extractedCPE = cpeParts[3] + ":" + cpeParts[4];
-                              // Ajout du CPE à l'ensemble pour éliminer les duplicatas
+                              
                               if (!cpeSet.has(extractedCPE)) {
                                   cpeSet.add(extractedCPE);
                               }
@@ -66,7 +66,7 @@ function processFilters(category) {
                   }
               });
 
-              resolve(Array.from(cpeSet)); // Résoudre la promesse avec les données filtrées
+              resolve(Array.from(cpeSet)); 
           })
           .catch(error => {
               console.error('Erreur lors de la requête :', error);
@@ -114,12 +114,12 @@ function findcve(filters) {
           });
         });
         console.log(cve)
-        resolve(Array.from(cve)); // Résoudre la promesse avec les données CVE filtrées
+        resolve(Array.from(cve));
 
       })
       .catch(error => {
         console.error('Erreur lors de la requête :', error);
-        reject(error); // Rejeter la promesse en cas d'erreur
+        reject(error); 
       });
   });
 }

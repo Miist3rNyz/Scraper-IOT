@@ -170,10 +170,74 @@ body {
   }
 
 
-  /* filtre*/
 
-  .filter-panel {
-    display: none;
-  }
   
-  
+  /* Style pour la section Filtres */
+.filter-panel {
+  width: 83,334%; 
+  display: none;
+  position: relative;
+  margin-left: 10px;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+/* Style pour le titre Filtres */
+.filter-panel h3 {
+  margin-top: 0;
+}
+
+/* Style pour la liste des filtres */
+#filter-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#filter-list li {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center; /* Aligner les éléments verticalement */
+}
+
+
+/* Style pour les cases à cocher */
+#filter-list input[type="checkbox"] {
+  margin-right: 5px;
+  order: -1; /* Déplacer la case à cocher vers la gauche */
+}
+
+
+/* Style pour les étiquettes des filtres */
+#filter-list label {
+  cursor: pointer;
+}
+
+#filter-form button[type="submit"] {
+  position: absolute; /* Positionnement absolu pour placer le bouton en haut à droite */
+  top: 10px; /* Espacement depuis le haut */
+  right: 10px; /* Espacement depuis la droite */
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style pour le bouton Envoyer au survol */
+#filter-form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Style pour la barre de recherche */
+#search-input {
+  width: 100%; /* Prendre toute la largeur du conteneur */
+  box-sizing: border-box; /* Inclure la largeur du padding et de la bordure dans la largeur totale */
+  padding: 8px; /* Espacement intérieur */
+  margin-bottom: 10px; /* Espacement inférieur */
+  border: 1px solid #ccc; /* Bordure */
+  border-radius: 5px; /* Coins arrondis */
+}

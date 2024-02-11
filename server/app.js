@@ -24,7 +24,8 @@ app.get('/', (req, res) => {
 
 // filtre
 // Route pour le filtrage
-app.post('/filters', async (req, res) => {
+app.post('/cat', async (req, res) => {
+  console.log("c'est moi")
   const { category } = req.body;
   
   try {
@@ -73,19 +74,6 @@ function processFilters(category) {
   });
 }
 
-// Route pour le filtrage
-app.post('/filters', async (req, res) => {
-  const { category } = req.body;
-
-  try {
-      const filteredData = await processFilters(category); // Attendre la fin du calcul de processFilters
-      console.log("renvoyé");
-      res.json(filteredData); // Renvoyer les données filtrées au client au format JSON
-  } catch (error) {
-      console.error('Erreur lors du traitement des filtres :', error);
-      res.status(500).send('Erreur lors du traitement des filtres.');
-  }
-});
 
  
 

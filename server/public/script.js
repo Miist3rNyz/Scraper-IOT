@@ -23,7 +23,7 @@ function sendCategory(category) {
   console.log("appelé");
   
   // Envoyer la catégorie au serveur
-  fetch('/filters', {
+  fetch('/cat', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
@@ -52,10 +52,10 @@ function sendCategory(category) {
 function generateFilterElements(filteredData) {
 
   const filterList = document.getElementById('filter-list');
-  filterList.innerHTML = ''; // Effacer les éléments précédents
+  filterList.innerHTML = ''; //efface
   
   Object.values(filteredData).forEach(filter => {
-      addFilterElement(filter, filterList); // Passer filterList à la fonction addFilterElement
+      addFilterElement(filter, filterList); 
   });
   const panel= document.getElementById('filter-panel')
   panel.style.display = 'block';
@@ -63,7 +63,7 @@ function generateFilterElements(filteredData) {
 }
 
 // Fonction pour ajouter un élément de filtre
-// Fonction pour ajouter un élément de filtre
+
 function addFilterElement(filterName, filterList) {
   const li = document.createElement('li');
   const label = document.createElement('label');
@@ -77,8 +77,8 @@ function addFilterElement(filterName, filterList) {
   label.htmlFor = filterName;
   label.textContent = filterName;
 
-  li.appendChild(input); // Placer la case à cocher en premier
-  li.appendChild(label); // Placer le texte de l'étiquette après la case à cocher
+  li.appendChild(input); 
+  li.appendChild(label); 
 
   filterList.appendChild(li);
 }
@@ -87,28 +87,65 @@ function addFilterElement(filterName, filterList) {
 
 //Recherche
 
-// Sélection de la barre de recherche
+
 const searchInput = document.getElementById('search-input');
 
-// Sélection de la liste des filtres
+
 const filterList = document.getElementById('filter-list');
 
-// Écouter les changements dans la barre de recherche
+
 searchInput.addEventListener('input', function() {
   const searchText = searchInput.value.toLowerCase(); // Convertir le texte en minuscules
 
-  // Sélectionner tous les éléments de la liste des filtres
+
   const filters = filterList.getElementsByTagName('li');
 
-  // Parcourir tous les filtres
+
   for (const filter of filters) {
     const filterName = filter.textContent.toLowerCase(); // Convertir le texte du filtre en minuscules
-    
-    // Vérifier si le filtre correspond au texte de recherche
+
     if (filterName.includes(searchText)) {
-      filter.style.display = 'block'; // Afficher le filtre s'il correspond
+      filter.style.display = 'block'; 
     } else {
-      filter.style.display = 'none'; // Masquer le filtre s'il ne correspond pas
+      filter.style.display = 'none'; 
     }
   }
 });
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function sendFilters() {
+  
+  const selectedFilters = getSelectedFilters();
+  
+  sendFiltersToServer(selectedFilters);
+}
+
+
+function getSelectedFilters() {
+  const checkboxes = document.querySelectorAll('#filter-list input[type="checkbox"]');
+  const selectedFilters = [];
+  checkboxes.forEach(function(checkbox) {
+    if (checkbox.checked) {
+      selectedFilters.push(checkbox.value);
+    }
+  });
+  return selectedFilters;
+}
+
+
+function sendFiltersToServer(filters) {
+  
+  fetch('/filters', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ filters: filters })
+  })
+  .then(response => {
+    // Traitez la réponse du serveur si nécessaire
+  })
+  .catch(error => {
+    console.error('Erreur lors de l\'envoi des filtres :', error);
+  });
+}

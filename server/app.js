@@ -11,27 +11,27 @@ const url_cve='http://localhost:5000/api/'
 var lettre='H'
 
 app.use(express.static(__dirname + '/public'));
-// Configuration du moteur de modèle EJS
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public'));
 app.use(bodyParser.json());
 
-// Route pour la page d'accueil
+
 app.get('/', (req, res) => {
   res.render('index');
 });
 
 
 // filtre
-// Route pour le filtrage
+
 app.post('/cat', async (req, res) => {
   console.log("c'est moi")
   const { category } = req.body;
+  lettre = category;
   
   try {
-      const filteredData = await processFilters(category); // Attendre la fin du calcul de processFilters
-      console.log("renvoyé");
-      res.json(filteredData); // Renvoyer les données filtrées au client au format JSON
+      const filteredData = await processFilters(category); 
+      res.json(filteredData); 
   } catch (error) {
       console.error('Erreur lors du traitement des filtres :', error);
       res.status(500).send('Erreur lors du traitement des filtres.');
@@ -47,6 +47,7 @@ function processFilters(category) {
           .then(response => {
               const responseData = response.data;
               var cpeRegex = /cpe:[^"]+/g;
+             
               responseData.forEach(element => {
                   str = JSON.stringify(element);
                   var cpeMatches = str.match(cpeRegex);
@@ -64,7 +65,7 @@ function processFilters(category) {
                       });
                   }
               });
-              console.log("Nombre d'éléments dans cpeSet :", cpeSet.size);
+
               resolve(Array.from(cpeSet)); // Résoudre la promesse avec les données filtrées
           })
           .catch(error => {
@@ -73,10 +74,55 @@ function processFilters(category) {
           });
   });
 }
+app.post('/filters',async (req, res) => {
+  
+  const selectedFilters = req.body.filters;
+  console.log(selectedFilters)
+  try{
+  cve = await findcve(selectedFilters)
 
+  res.json(cve)
+} catch (error) {
+  console.error('Erreur lors du traitement des filtres :', error);
+  res.status(500).send('Erreur lors du traitement des filtres.');
+}
 
- 
+});
 
+function findcve(filters) {
+  return new Promise((resolve, reject) => {
+    var cve = new Set();
+    axios.get(url_cve + lettre)
+      .then(response => {
+        const responseData = response.data;
+        responseData.forEach(cveData => {
+          cveData = JSON.stringify(cveData);
+          filters.forEach(filtre => {
+            if (cveData.includes(filtre)) {
+              lst = cveData.split('\\');
+              const id = lst[3].split('"')[1];
+              const brand = filtre;
+              const published = lst[11].split('"')[1].split("T")[0];
+              const lastModified = lst[15].split('"')[1].split("T")[0];
+              lst = lst.slice(22);
+              const desc = lst[lst.indexOf('"en') + 4].split('"')[1];
+              const cvss = lst[lst.indexOf('"baseScore') + 1].split(':')[1].split(",")[0].split("}")[0];
+              const svr = lst[lst.indexOf('"baseSeverity') + 2].split('"')[1];
+              const unite = [id,brand, published, lastModified, desc, cvss, svr];
+              cve.add(unite);
+            }
+          });
+        });
+        console.log(cve)
+        resolve(Array.from(cve)); // Résoudre la promesse avec les données CVE filtrées
+
+      })
+      .catch(error => {
+        console.error('Erreur lors de la requête :', error);
+        reject(error); // Rejeter la promesse en cas d'erreur
+      });
+  });
+}
 
 
 // Démarrage du serveur

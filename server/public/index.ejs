@@ -28,53 +28,24 @@
 
       <h3>Filtres</h3>
       <input type="text" id="search-input" placeholder="Rechercher...">
-      <form id="filter-form">
+     
 
         <ul id="filter-list">
       <!-- Les filtres seront générés ici -->
     </ul>
-        <button type="submit">Envoyer</button>
-      </form>
+        <button type="button" id="send-button" onclick="sendFilters()">Envoyer</button>
+     
     </div>
 
-    <div class="articles">
+    <div class="articles" id="articles">
       
-      <div class="article">
-        <img src="test.png" alt="Image de l'article">
-        <div class="article-details" onclick="showPopup('Article 1', 'Auteur 1', 'Date 1', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.')">
-          <h2>Test</h2>
-          <ul>
-            <li>Date: 0</li>
-            <li>Auteur: 0</li>
-            <li>Catégorie: 0</li>
-          </ul>
-        </div>
-         </div>
-         <div class="article">
-          <img src="test.png" alt="Image de l'article">
-          <div class="article-details">
-            <h2>Test</h2>
 
-            <ul>
-              <li>Date: 0</li>
-              <li>Auteur: 0</li>
-              <li>Catégorie: 0</li>
-            </ul>
-          </div>
-           </div>
   
 
     </div>
   </div>
     <!-- Fenêtre pop-up -->
-    <div id="popup" class="popup" style="display: none">
-      
-      <h2 id="popup-title"></h2> <button type="button" onclick="hidePopup()"><img src="croix.png"/></button>
-      <br>
-      <p id="popup-author"></p>
-      <p id="popup-date"></p>
-      <p id="popup-desc"></p>
-    </div>
+
 
   <script src="script.js">
 

@@ -1,4 +1,4 @@
-function showPopup(title, author, date, desc) {
+/* function showPopup(title, author, date, desc) {
     var popup = document.getElementById('popup');
     var popupTitle = document.getElementById('popup-title');
     var popupAuthor = document.getElementById('popup-author');
@@ -15,12 +15,11 @@ function showPopup(title, author, date, desc) {
 function hidePopup(){
     var popup = document.getElementById('popup');
     popup.style.display='none';
-}
+} */
 
 //gestion des filtres
 
 function sendCategory(category) {
-  console.log("appelé");
   
   // Envoyer la catégorie au serveur
   fetch('/cat', {
@@ -84,7 +83,7 @@ function addFilterElement(filterName, filterList) {
 }
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Recherche
 
 
@@ -113,15 +112,16 @@ searchInput.addEventListener('input', function() {
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function sendFilters() {
+async function sendFilters() {
   
   const selectedFilters = getSelectedFilters();
   
-  sendFiltersToServer(selectedFilters);
+  await sendFiltersToServer(selectedFilters);
 }
 
 
 function getSelectedFilters() {
+  console.log("getting filters")
   const checkboxes = document.querySelectorAll('#filter-list input[type="checkbox"]');
   const selectedFilters = [];
   checkboxes.forEach(function(checkbox) {
@@ -135,6 +135,8 @@ function getSelectedFilters() {
 
 function sendFiltersToServer(filters) {
   
+  console.log("sending")
+  
   fetch('/filters', {
     method: 'POST',
     headers: {
@@ -143,9 +145,75 @@ function sendFiltersToServer(filters) {
     body: JSON.stringify({ filters: filters })
   })
   .then(response => {
-    // Traitez la réponse du serveur si nécessaire
+    if (response.ok) {
+      console.log('filters sent successfully.');
+      const panel= document.getElementById('filter-panel')
+      panel.style.display = 'none';
+      
+      response.json().then(data => {
+        console.log(Object.values(data))
+
+        generateArticles(data);
+      });
+
+  } else {
+      console.error('Failed to send filters.');
+  }
   })
   .catch(error => {
     console.error('Erreur lors de l\'envoi des filtres :', error);
   });
+}
+
+//article
+function generateOneArticle(cveData) {
+  console.log("generating article")
+  const article = document.createElement('div');
+  console.log(article)
+  article.classList.add('article');
+
+  const img = document.createElement('img');
+  img.src = 'test.png'; // Remplacez 'test.png' par le chemin de l'image approprié pour chaque CVE
+  img.alt = "Image de l'article";
+  article.appendChild(img);
+
+  const articleDetails = document.createElement('div');
+  articleDetails.classList.add('article-details');
+
+  const title = document.createElement('h2');
+  title.textContent = cveData[0]; // Supposant que le titre de l'article est la première entrée dans les données du CVE
+  articleDetails.appendChild(title);
+
+  const detailsList = document.createElement('ul');
+
+  // Ajoute des éléments de liste pour chaque détail (par exemple: ID, Date de publication, Description, etc.)
+  const details = ['Marque','Date de publication', 'Dernière modification', 'Description', 'CVSS', 'Sévérité de base'];
+  for (let i = 0; i < details.length; i++) {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${details[i]}: ${cveData[i+1]}`;
+    detailsList.appendChild(listItem);
+  }
+
+  articleDetails.appendChild(detailsList);
+  article.appendChild(articleDetails);
+
+  return article;
+}
+
+function generateArticles(filteredData) {
+  console.log(filteredData)
+  const articlesContainer = document.querySelector('.articles');
+
+  // Efface les articles précédents
+  articlesContainer.innerHTML = '';
+  const reversedData = Object.values(filteredData).reverse();
+  // Boucle sur les données des CVE
+  reversedData.forEach(cve => {
+    
+    const article = generateOneArticle(cve);
+    articlesContainer.appendChild(article);
+  });
+
+  const art = document.getElementById('articles');
+  art.style.display = 'block';
 }

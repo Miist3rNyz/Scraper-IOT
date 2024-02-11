@@ -97,12 +97,15 @@ body {
 }
 
   .articles {
+    display:'none';
     width: 83.334%; /* 5/6 de la largeur */
     padding: 20px;
+    
   }
   
   .article {
-    display: none;
+    display: flex; /* Utiliser flexbox */
+    align-items: center; /* Aligner les éléments sur l'axe vertical */
     margin-bottom: 20px;
     border-style: inset;
   }
@@ -135,7 +138,7 @@ body {
     margin-right: 20px;
   }
   
-  .popup {
+  /* .popup {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -167,7 +170,7 @@ body {
   .popup h2{
     float: left;
     margin-top: 0;
-  }
+  } */
 
 
 
@@ -215,21 +218,22 @@ body {
   cursor: pointer;
 }
 
-#filter-form button[type="submit"] {
-  position: absolute; /* Positionnement absolu pour placer le bouton en haut à droite */
-  top: 10px; /* Espacement depuis le haut */
-  right: 10px; /* Espacement depuis la droite */
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+#send-button {
+  position: absolute;
+  top: 20px; 
+  right: 20px; 
+  padding: 10px 20px; 
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
 }
 
-/* Style pour le bouton Envoyer au survol */
-#filter-form button[type="submit"]:hover {
-  background-color: #0056b3;
+/* Style pour le bouton Envoyer les filtres au survol */
+#send-button:hover {
+  background-color: #0056b3; 
 }
 
 /* Style pour la barre de recherche */

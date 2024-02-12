@@ -162,7 +162,7 @@ function generateOneArticle(cveData) {
   articleDetails.classList.add('article-details');
 
   const title = document.createElement('h2');
-  title.textContent = cveData[0]; /
+  title.textContent = cveData[0]; 
   articleDetails.appendChild(title);
 
   const detailsList = document.createElement('ul');

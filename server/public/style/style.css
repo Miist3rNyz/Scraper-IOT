@@ -52,7 +52,7 @@ body {
   content: "Home and SOHO devices; routers, on-line cameras and monitoring, other customer grade-appliances. ";
   display: block;
   position: absolute;
-  background-color: rgb(0, 0, 0); 
+  background-color: #ccc; 
   padding: 10px;
 }
 
@@ -60,7 +60,7 @@ body {
   content: "SCADA and industrial systems, automation, sensor systems, non-home IoT appliances, car and vehicles (subsystems), medical devices, industrial video recorders and surveillance systems.";
   display: block;
   position: absolute;
-  background-color:  rgb(0, 0, 0);
+  background-color:  #ccc;
   padding: 10px;
 }
 
@@ -68,7 +68,7 @@ body {
   content: "Enterprise, Service Provider (SP) hardware (routers, switches, enterprise Wi-Fi and networking) this constitutes mainly the network level of IoT infrastructure.";
   display: block;
   position: absolute;
-  background-color:  rgb(0, 0, 0);
+  background-color:  #ccc;
   padding: 10px;
 }
 
@@ -76,7 +76,7 @@ body {
   content: "mobile phones, tablets, smart watches and portable devices this constitutes the “controllers” of IoT systems. ";
   display: block;
   position: absolute;
-  background-color: rgb(0, 0, 0);
+  background-color: #ccc;
   padding: 10px;
 }
 
@@ -84,7 +84,7 @@ body {
   content: "PCs, laptops, PC-like computing appliances and PC servers (enterprise) this constitutes the “controllers” of IoT systems.";
   display: block;
   position: absolute;
-  background-color: rgb(0, 0, 0);
+  background-color: #ccc;
   padding: 10px;
 }
 
@@ -92,7 +92,7 @@ body {
   content: "other, non-home appliances: enterprise printers and printing systems, copy machines, non-customer storage and multimedia appliances.";
   display: block;
   position: absolute;
-  background-color: rgb(0, 0, 0);
+  background-color: #ccc;
   padding: 10px;
 }
 

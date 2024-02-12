@@ -30,17 +30,16 @@ services:
     depends_on:
       mongodb:
         condition: service_started
- 
- # frontend:
-  #  container_name: frontend
-    # build:
-     # context: .
-      #dockerfile: Dockerfile.frontend
-    #ports:
-    #- "3100:3100"
-    #depends_on:
-     # server:
-      #  condition: service_started
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "31000:31000"
+    depends_on:
+      server:
+        condition: service_started
         
 volumes:
   shared_database:

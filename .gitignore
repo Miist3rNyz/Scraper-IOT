@@ -6,3 +6,4 @@ logs
 etc
 *.env
 test.py
+server/node_modules/*

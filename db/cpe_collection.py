@@ -1,6 +1,6 @@
 import logging
 from typing import NoReturn
-
+import re
 from db.nvd_collection import NvdCollection
 from db.scraper_database import ScraperDatabase
 
@@ -29,3 +29,9 @@ class CpeCollection(NvdCollection):
 
     def get_cpe_ids(self, data: dict) -> list:
         return [cpe["matchString"]["matchCriteriaId"] for cpe in data['matchStrings']]
+    def get_all_cpe(self):
+        return self.find()
+    def get_cpe_by_brand_and_product(self,brand,product):
+        regex = re.compile(f"cpe:.*:h:{brand}:{product}:")
+        resultats = self.find({"criteria": {"$regex": regex}})
+        return resultats

@@ -3,6 +3,7 @@ from typing import NoReturn
 
 from db.nvd_collection import NvdCollection
 from db.scraper_database import ScraperDatabase
+from controllers.classifier import CVEclassifier
 
 LOGGER = logging.getLogger("scraper-iot")
 
@@ -15,9 +16,11 @@ class CveCollection(NvdCollection):
         super().__bool__()
 
     def insert(self, data: dict) -> None:
+        cve_classifier=CVEclassifier()
         cves = [cve["cve"] for cve in data['vulnerabilities']]
         refactor_cves = [{'_id': cve.pop('id'), **cve} for cve in cves]
-        self.insert_many(refactor_cves)
+        refactor_cves_classify=cve_classifier.classify_all_cves(refactor_cves)
+        self.insert_many(refactor_cves_classify)
 
     def replace(self, data: dict) -> None:
         cves_ids = self.get_cve_ids(data)
@@ -28,3 +31,17 @@ class CveCollection(NvdCollection):
 
     def get_cve_ids(self, data: dict) -> list:
         return [cve["cve"]["id"] for cve in data['vulnerabilities']]
+
+    def get_cpe_by_brand_and_category(self,brand,product, category):
+        # Recherche des documents CVE contenant la marque spécifiée dans la CPE et la catégorie spécifiée
+        cursor = self.find({
+            "$and": [
+                {"configurations.nodes.cpeMatch.criteria": {"$regex": f".*{brand}.*{product}.*"}},
+                {"category": category}
+            ]
+        })
+
+        cve_list = []
+        for document in cursor:
+            cve_list.append(document)
+        return cve_list

@@ -1,152 +1,86 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  .top-banner {
-    background-color: #000000; /* Couleur du bandeau */
-    color: #1F51FF; /* Couleur du texte dans le bandeau */
-    padding: 10px;
-    text-align: center;
-    max-height: 16.666%;
-  }
-  .top-banner h1{
-    text-align: left;
-  }
-  .top-banner img{
-    max-height: 16.666%;
-    float: right;
-  }
-  .container {
-    display: flex;
-  }
-  
-  .navigation {
-    width: 16.666%; /* 1/6 de la largeur */
-    background-color: #f0f0f0;
-    padding: 20px;
-    height: 100vh; 
-  }
-  
-  .navigation ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .navigation li {
-    margin-bottom: 10px;
-  }
-  .navigation a {
-    text-decoration: none;
-    color: black;
-  }
-
-  /* Style lorsque la souris survole le lien */
-.navigation a:hover {
-  color:#1F51FF;
-
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4; /* Couleur de fond plus douce */
 }
 
-/* Texte différent pour chaque lien en hover */
-.navigation a[data-hover-text="H"]:hover::before {
-  content: "Home and SOHO devices; routers, on-line cameras and monitoring, other customer grade-appliances. ";
-  display: block;
-  position: absolute;
-  background-color: #ccc; 
-  padding: 10px;
+.top-banner {
+  background-color: #0044cc; /* Couleur de fond actualisée */
+  color: #ffffff; /* Texte blanc pour contraste */
+  padding: 20px 40px; /* Espacement ajusté */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.navigation a[data-hover-text="S"]:hover::before {
-  content: "SCADA and industrial systems, automation, sensor systems, non-home IoT appliances, car and vehicles (subsystems), medical devices, industrial video recorders and surveillance systems.";
-  display: block;
-  position: absolute;
-  background-color:  #ccc;
-  padding: 10px;
+.top-banner img {
+  height: 60px; /* Hauteur fixe pour le logo */
 }
 
-.navigation a[data-hover-text="E"]:hover::before {
-  content: "Enterprise, Service Provider (SP) hardware (routers, switches, enterprise Wi-Fi and networking) this constitutes mainly the network level of IoT infrastructure.";
-  display: block;
-  position: absolute;
-  background-color:  #ccc;
-  padding: 10px;
+.top-banner h1 {
+  margin: 0; /* Enlever la marge par défaut */
+  font-size: 24px; /* Taille de police ajustée */
 }
 
-.navigation a[data-hover-text="M"]:hover::before {
-  content: "mobile phones, tablets, smart watches and portable devices this constitutes the “controllers” of IoT systems. ";
-  display: block;
-  position: absolute;
-  background-color: #ccc;
-  padding: 10px;
+.container {
+  display: flex;
+  flex-wrap: wrap; /* Permet aux éléments de passer à la ligne sur des écrans plus petits */
 }
 
-.navigation a[data-hover-text="P"]:hover::before {
-  content: "PCs, laptops, PC-like computing appliances and PC servers (enterprise) this constitutes the “controllers” of IoT systems.";
-  display: block;
-  position: absolute;
-  background-color: #ccc;
-  padding: 10px;
+.navigation {
+  flex: 1; /* Flexibilité ajustée pour une meilleure réactivité */
+  min-width: 160px; /* Largeur minimale pour éviter le surpeuplement */
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ombre subtile pour la profondeur */
 }
 
-.navigation a[data-hover-text="A"]:hover::before {
-  content: "other, non-home appliances: enterprise printers and printing systems, copy machines, non-customer storage and multimedia appliances.";
-  display: block;
-  position: absolute;
-  background-color: #ccc;
-  padding: 10px;
+.navigation ul, .filter-panel ul, #filter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-  .articles {
-    display:'none';
-    width: 83.334%; /* 5/6 de la largeur */
-    padding: 20px;
-    
-  }
-  
-  .article {
-    display: flex; 
-    align-items: center;
-    margin-bottom: 20px;
-    border-style: inset;
-  }
-  
-  .article img {
-    width: 150px; 
-    height: auto;
-    margin-right: 20px;
-  }
-  
-  .article-details {
-    flex-grow: 1;
-  }
-  
-  .article-details h2 {
-    margin-top: 0;
-  }
-  
-  .article-details ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .article-details li {
-    margin-bottom: 5px;
-  }
-  .article img {
-    width: 150px; 
-    height: auto;
-    margin-right: 20px;
-  }
+.navigation a, .filter-panel a {
+  text-decoration: none;
+  color: #333333; /* Couleur de texte plus standard */
+  display: block; /* Faire en sorte que le lien remplisse le conteneur li pour une zone cliquable plus grande */
+  padding: 8px 0; /* Espacement pour les liens */
+}
 
+.navigation a:hover, .filter-panel a:hover {
+  color: #0056b3;
+  background-color: #eef0f7; /* Fond au survol pour une meilleure indication */
+  border-radius: 4px; /* Bords arrondis pour le style au survol */
+}
 
+.articles {
+  flex: 4; /* Prend plus d'espace dans le conteneur */
+  padding: 20px;
+}
 
+.article {
+  background-color: #ffffff;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Cohérence avec l'ombre de navigation */
+  border-radius: 5px; /* Bords arrondis */
+}
 
-  
-  /* Style pour la section Filtres */
+.article-details {
+  margin-left: 20px;
+}
+
+.article img {
+  max-width: 100px; /* Taille d'image ajustée */
+  border-radius: 5px; /* Bords arrondis pour les images */
+}
+
 .filter-panel {
-  width: 83,334%; 
-  display: none;
-  position: relative;
+  width: 33.3333%; /* Correction de la valeur */
+  display: block; /* Changé à 'block' si vous voulez le voir en permanence */
+  position: relative; /* Permet de positionner absolument le bouton 'Envoyer' */
   margin-left: 10px;
   margin-top: 20px;
   padding: 20px;
@@ -155,60 +89,99 @@ body {
   background-color: #f0f0f0;
 }
 
-
-.filter-panel h3 {
-  margin-top: 0;
+#send-button {
+  position: relative;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-
-#filter-list {
-  list-style-type: none;
-  padding: 0;
+#send-button:hover {
+  background-color: #0056b3;
 }
 
-#filter-list li {
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center; 
+/* Optimisation de l'accessibilité et du style pour les éléments de formulaire */
+input[type="text"], select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-
-
-#filter-list input[type="checkbox"] {
-  margin-right: 5px;
-  order: -1; 
-}
-
-
-/* Style pour les étiquettes des filtres */
-#filter-list label {
+button {
   cursor: pointer;
 }
 
-#send-button {
-  position: absolute;
-  top: 20px; 
-  right: 20px; 
-  padding: 10px 20px; 
-  background-color: #007bff; 
-  color: white; 
-  border: none; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  transition: background-color 0.3s ease; 
+/* Amélioration des tooltips */
+.navigation a[data-hover-text]:hover::before {
+  background-color: #f0f0f0; /* Fond plus clair */
+  border: 1px solid #ccc; /* Bordure ajoutée */
+  border-radius: 4px; /* Bords arrondis */
+  color: #333; /* Couleur de texte ajustée */
+  margin-top: 20px; /* Espacement ajusté */
 }
 
-/* Style pour le bouton Envoyer les filtres au survol */
-#send-button:hover {
-  background-color: #0056b3; 
-}
-
-/* Style pour la barre de recherche */
 #search-input {
-  width: 100%; /* Prendre toute la largeur du conteneur */
-  box-sizing: border-box; 
-  padding: 8px; 
-  margin-bottom: 10px; 
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
+  width: 100%; /* Prend toute la largeur disponible */
+  height: 40px; /* Hauteur de la barre de recherche */
+  font-size: 16px; /* Taille du texte dans la barre de recherche */
+  padding: 8px 12px; /* Espacement intérieur pour le texte */
+  margin-bottom: 10px; /* Espacement en dessous de la barre de recherche */
+  border: 1px solid #ccc; /* Bordure subtile */
+  border-radius: 5px; /* Bords arrondis pour un look moderne */
+  box-sizing: border-box; /* S'assure que padding et border sont inclus dans la largeur/hauteur */
+}
+.select-style {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #dfe3e8;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  appearance: none; /* Remove default styling */
+  -webkit-appearance: none; /* For older versions of Safari */
+  cursor: pointer;
+}
+
+/* Style pour l'icône de flèche déroulante */
+.select-style:after {
+  content: '▼';
+  font-size: 12px;
+  right: 10px;
+  top: calc(50% - 6px);
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Style pour le conteneur de select pour positionner l'icône de flèche */
+.select-container {
+  position: relative;
+  width: 33.3333%;
+}
+
+.select-container:after {
+  content: '▼';
+  font-size: 12px;
+  right: 10px;
+  top: calc(50% - 6px);
+  position: absolute;
+  pointer-events: none;
+}
+.hidden {
+  display: none;
+}
+.buttons-container {
+  text-align: left; /* Ou toute autre règle CSS pour le positionner selon vos préférences */
+  padding: 20px; /* Ajustez l'espacement selon le besoin */
 }

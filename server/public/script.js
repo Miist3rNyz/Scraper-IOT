@@ -28,19 +28,48 @@ function sendCategory(category) {
   });
 }
 
+function processFiltersForDisplay(filteredData) {
+  const brandsWithProducts = {}; // Objet pour stocker les marques et leurs produits
+
+  filteredData.forEach(filter => {
+    const [brand, product] = filter.split(':'); // Sépare la chaîne "marque:produit"
+
+    if (!brandsWithProducts[brand]) {
+      brandsWithProducts[brand] = []; // Initialise un nouveau tableau si la marque n'existe pas
+    }
+    brandsWithProducts[brand].push(product); // Ajoute le produit au tableau de la marque
+  });
+
+  return brandsWithProducts;
+}
 
 function generateFilterElements(filteredData) {
+  const brandsWithProducts = processFiltersForDisplay(filteredData);
+  const brandsList = document.getElementById('brands-list'); // Supposons que vous avez un <select id="brands-list"></select>
+  brandsList.innerHTML = ''; // Efface les options précédentes
 
-  const filterList = document.getElementById('filter-list');
-  filterList.innerHTML = ''; //efface
-  
-  Object.values(filteredData).forEach(filter => {
-      addFilterElement(filter, filterList); 
+  Object.keys(brandsWithProducts).forEach(brand => {
+    const option = document.createElement('option');
+    option.value = brand;
+    option.textContent = brand;
+    brandsList.appendChild(option);
   });
-  const panel= document.getElementById('filter-panel')
-  panel.style.display = 'block';
 
+  // Événement change sur la sélection de la marque pour charger les produits
+  brandsList.addEventListener('change', function() {
+    const selectedBrand = this.value;
+    const productsList = document.getElementById('products-list'); // Supposons que vous avez un second <select id="products-list"></select>
+    productsList.innerHTML = ''; // Efface les options précédentes
+
+    brandsWithProducts[selectedBrand].forEach(product => {
+      const option = document.createElement('option');
+      option.value = product;
+      option.textContent = product;
+      productsList.appendChild(option);
+    });
+  });
 }
+
 
 // Fonction pour ajouter un élément de filtre
 
@@ -102,14 +131,20 @@ async function sendFilters() {
 
 
 function getSelectedFilters() {
-  console.log("getting filters")
-  const checkboxes = document.querySelectorAll('#filter-list input[type="checkbox"]');
+  console.log("getting filters");
+  
+  // Récupère la marque sélectionnée
+  const selectedBrand = document.getElementById('brands-list').value;
+  
+  // Récupère le produit sélectionné
+  const selectedProduct = document.getElementById('products-list').value;
+  
+  // Crée un filtre sous la forme "marque:produit" si les deux sont sélectionnés
   const selectedFilters = [];
-  checkboxes.forEach(function(checkbox) {
-    if (checkbox.checked) {
-      selectedFilters.push(checkbox.value);
-    }
-  });
+  if (selectedBrand !== "Choisir une marque" && selectedProduct !== "Choisir un produit") {
+    selectedFilters.push(`${selectedBrand}:${selectedProduct}`);
+  }
+  
   return selectedFilters;
 }
 
@@ -198,3 +233,4 @@ function generateArticles(filteredData) {
   const art = document.getElementById('articles');
   art.style.display = 'block';
 }
+document.getElementById('filter-panel').classList.add('hidden');

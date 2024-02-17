@@ -33,21 +33,34 @@
         <ul id="filter-list">
       <!-- Les filtres sont générés ici -->
     </ul>
-        <button type="button" id="send-button" onclick="sendFilters()">Envoyer</button>
-     
     </div>
-
+    </div class="buttons-container">
+      <button type="button" id="send-button" onclick="sendFilters()">Envoyer</button>
+    </div>
     <div class="articles" id="articles">
       
   <!-- Les articles sont générés ici -->
 
     </div>
   </div>
-
-
+  <div class="select-container">
+    <select id="brands-list" class="select-style">
+      <option>Choisir une marque</option>
+      <!-- Les options de marque seront ajoutées ici -->
+    </select>
+  </div>
+  
+  <div class="select-container">
+    <select id="products-list" class="select-style">
+      <option>Choisir un produit</option>
+      <!-- Les options de produit seront ajoutées ici -->
+    </select>
+  </div>
+  
+  
 
   <script src="script.js">
-
+    
   </script>
 </body>
 </html>

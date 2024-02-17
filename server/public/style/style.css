@@ -90,22 +90,18 @@ body {
 }
 
 #send-button {
-  position: relative;
-  top: 20px;
-  right: 20px;
-  bottom: 20px;
+  background-color: #007bff; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  border: 1px solid transparent; /* Retire la bordure pour un look plus moderne */
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-size: 16px; /* Augmente la taille de la police pour améliorer la lisibilité */
+  transition: background-color 0.3s ease; /* Assure une transition en douceur au survol */
 }
 
 #send-button:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Couleur de fond au survol */
 }
+
 
 /* Optimisation de l'accessibilité et du style pour les éléments de formulaire */
 input[type="text"], select {
@@ -165,23 +161,34 @@ button {
 }
 
 /* Style pour le conteneur de select pour positionner l'icône de flèche */
-.select-container {
-  position: relative;
-  width: 33.3333%;
-}
-
 .select-container:after {
-  content: '▼';
-  font-size: 12px;
-  right: 10px;
-  top: calc(50% - 6px);
-  position: absolute;
+  color: #333;
   pointer-events: none;
 }
+
 .hidden {
   display: none;
 }
-.buttons-container {
-  text-align: left; /* Ou toute autre règle CSS pour le positionner selon vos préférences */
-  padding: 20px; /* Ajustez l'espacement selon le besoin */
+.filters-and-send-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff; /* Arrière-plan pour séparer visuellement cette section */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin: 20px 0; /* Ajoute un peu d'espace autour du conteneur */
+}
+
+.select-style, #send-button {
+  flex-grow: 1;
+  margin: 0 10px;
+  text-align: center;
+}
+
+/* Assurez-vous que le bouton est bien aligné avec les sélecteurs */
+#send-button {
+  margin-left: auto; /* Pousse le bouton vers la droite */
+  width: auto; /* Permet au bouton de dimensionner son contenu */
+  padding: 10px 20px; /* Ajuste le padding pour mieux s'adapter au texte */
 }

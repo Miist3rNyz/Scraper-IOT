@@ -32,7 +32,7 @@ class CveCollection(NvdCollection):
     def get_cve_ids(self, data: dict) -> list:
         return [cve["cve"]["id"] for cve in data['vulnerabilities']]
 
-    def get_cpe_by_brand_and_category(self,brand,product, category):
+    def get_cve_by_brand_and_category(self,brand,product, category):
         # Recherche des documents CVE contenant la marque spécifiée dans la CPE et la catégorie spécifiée
         cursor = self.find({
             "$and": [

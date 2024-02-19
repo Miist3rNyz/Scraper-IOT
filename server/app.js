@@ -6,7 +6,7 @@ const axios = require('axios');
 
 const app = express();
 const port = 31000;
-const url_cve='http://localhost:5000/api/'
+const url_cve='http://server:5000/api/'
 
 var lettre='H'
 

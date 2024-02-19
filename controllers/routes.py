@@ -20,7 +20,7 @@ def get_data_s():
 def get_cve_with_brand_and_category_S():
     brand=request.args.get('brand')
     product=request.args.get('product')
-    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'S')
+    datas=cve_collection.get_cve_by_brand_and_category(brand,product,'S')
     return jsonify(datas)
 
 @api_bp.route('/P', methods=['GET'])
@@ -33,7 +33,7 @@ def get_data_p():
 def get_cve_with_brand_and_category_P():
     brand=request.args.get('brand')
     product=request.args.get('product')
-    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'P')
+    datas=cve_collection.get_cve_by_brand_and_category(brand,product,'P')
     return jsonify(datas)
 
 @api_bp.route('/H', methods=['GET'])
@@ -46,7 +46,7 @@ def get_data_h():
 def get_cve_with_brand_and_category_H():
     brand=request.args.get('brand')
     product=request.args.get('product')
-    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'H')
+    datas=cve_collection.get_cve_by_brand_and_category(brand,product,'H')
     return jsonify(datas)
 
 @api_bp.route('/E', methods=['GET'])
@@ -59,7 +59,7 @@ def get_data_e():
 def get_cve_with_brand_and_category_E():
     brand=request.args.get('brand')
     product=request.args.get('product')
-    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'E')
+    datas=cve_collection.get_cve_by_brand_and_category(brand,product,'E')
     return jsonify(datas)
 
 @api_bp.route('/M', methods=['GET'])
@@ -71,7 +71,7 @@ def get_data_m():
 def get_cve_with_brand_and_category_M():
     brand=request.args.get('brand')
     product=request.args.get('product')
-    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'M')
+    datas=cve_collection.get_cve_by_brand_and_category(brand,product,'M')
     return jsonify(datas)
 
 @api_bp.route('/A', methods=['GET'])
@@ -85,7 +85,7 @@ def get_data_a():
 def get_cve_with_brand_and_category_A():
     brand=request.args.get('brand')
     product=request.args.get('product')
-    datas=cve_collection.get_cpe_by_brand_and_category(brand,product,'A')
+    datas=cve_collection.get_cve_by_brand_and_category(brand,product,'A')
     return jsonify(datas)
 
 @api_bp.route('/cpe', methods=['GET'])

@@ -21,6 +21,7 @@ class CVEclassifier:
             "tablet": "M",
             "smart watch": "M",
             "portable": "M",
+            "iPhone": "M",
             "pc": "P",
             "laptop": "P",
             "computing": "P",

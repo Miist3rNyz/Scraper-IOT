@@ -23,46 +23,59 @@
         <li><a href="#" class="hover-link" data-hover-text="P" onclick="sendCategory('P')">P – PCs, laptops, ...</a></li>
         <li><a href="#" class="hover-link" data-hover-text="A" onclick="sendCategory('A')">A – other</a></li>
       </ul>
+      <h2> Vendor</h2>
+      <div class="select-container">
+        <select id="brands-list" class="select-style">
+          <option>Choisir une marque</option>
+          <!-- Les options de marque seront ajoutées ici -->
+        </select>
+      </div>
+      <h2> Product</h2>
+        <div class="select-container">
+          <select id="products-list" class="select-style">
+            <option>Choisir un produit</option>
+             <!-- Les options de produit seront ajoutées ici -->
+          </select>
+        </div>
+      <div class="buttons-container">
+        <button type="button" id="send-button" onclick="sendFilters()">Envoyer</button>
+      </div>
     </div>
+
     <div class="filter-panel" id="filter-panel" >
 
       <h3>Filtres</h3>
       <input type="text" id="search-input" placeholder="Rechercher...">
-     
+
 
         <ul id="filter-list">
       <!-- Les filtres sont générés ici -->
     </ul>
     </div>
     <div class="articles" id="articles">
-      
-  <!-- Les articles sont générés ici -->
-
+     <!-- Les articles sont générés ici -->
     </div>
   </div>
-  <div class="filters-and-send-container">
-    <div class="select-container">
-      <select id="brands-list" class="select-style">
-        <option>Choisir une marque</option>
-        <!-- Les options de marque seront ajoutées ici -->
-      </select>
-    </div>
-    
-    <div class="select-container">
-      <select id="products-list" class="select-style">
-        <option>Choisir un produit</option>
-        <!-- Les options de produit seront ajoutées ici -->
-      </select>
-    </div>
-    
-    <div class="buttons-container">
-      <button type="button" id="send-button" onclick="sendFilters()">Envoyer</button>
-    </div>
-  </div>
-  
-  
-  
 
+<!--  <div class="filters-and-send-container">-->
+<!--    <div class="select-container">-->
+<!--      <select id="brands-list" class="select-style">-->
+<!--        <option>Choisir une marque</option>-->
+<!--        &lt;!&ndash; Les options de marque seront ajoutées ici &ndash;&gt;-->
+<!--      </select>-->
+<!--    </div>-->
+<!--    -->
+<!--    <div class="select-container">-->
+<!--      <select id="products-list" class="select-style">-->
+<!--        <option>Choisir un produit</option>-->
+<!--        &lt;!&ndash; Les options de produit seront ajoutées ici &ndash;&gt;-->
+<!--      </select>-->
+<!--    </div>-->
+<!--    -->
+<!--    <div class="buttons-container">-->
+<!--      <button type="button" id="send-button" onclick="sendFilters()">Envoyer</button>-->
+<!--    </div>-->
+<!--  </div>-->
   <script src="script.js">
     
   </script>

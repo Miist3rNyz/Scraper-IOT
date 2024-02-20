@@ -192,3 +192,7 @@ button {
   width: auto; /* Permet au bouton de dimensionner son contenu */
   padding: 10px 20px; /* Ajuste le padding pour mieux s'adapter au texte */
 }
+
+.buttons-container {
+  margin-top: 24px;
+}

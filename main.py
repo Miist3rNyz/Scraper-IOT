@@ -86,6 +86,6 @@ if __name__ == "__main__":
         ImportScheduler().schedule_importer()
     elif args.command == "start":
         logger.info("Start Flask server")
-        app.run(host='0.0.0.0', port=5000)
+        app.run(host='0.0.0.0', port=5005)
 
     logger.info("Exiting...")
